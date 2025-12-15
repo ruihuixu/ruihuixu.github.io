@@ -1,18 +1,20 @@
-baseURL = 'https://ruihuixu.github.io/' # 替换成你的 GitHub Pages 网址
+baseURL = 'https://ruihuixu.github.io/' # 请确认这是你的 GitHub Pages 网址
 languageCode = 'zh-cn'
 title = 'Code & Thinking'
 theme = 'ananke'
 
-# 设置每页显示文章数
-paginate = 10
+# -----------------------------------------------------------
+# [修复点] 新版 Hugo 分页配置写法
+# 旧写法: paginate = 10 (已报错)
+# 新写法如下：
+[pagination]
+  pagerSize = 10
+# -----------------------------------------------------------
 
 [params]
-  # 网站描述，会显示在首页
   description = "记录代码与思考"
-  # 首页背景图 (Ananke 默认有一张，你可以以后换)
   # featured_image = "/images/hero.jpg" 
 
-# 这里的设置是为了让你的 "Code Notes" 显示在顶部导航栏
 [menu]
   [[menu.main]]
     identifier = "code-notes"
