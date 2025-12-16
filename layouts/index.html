@@ -1,0 +1,76 @@
+{{ define "main" }}
+<div class="pa3 pa4-ns w-100" style="background-color: #f6f8fa; min-height: 100vh;">
+
+  <div class="mw9 center flex flex-column flex-row-l gap-4">
+    
+    <div class="w-100 w-25-l mb4 mb0-l">
+      <div class="bg-white pa4 br3 shadow-1 sticky-l" style="top: 2rem;">
+        <div class="tc">
+          <img src="/images/me.jpg" class="br-100 h4 w4 dib ba b--black-10 pa1" alt="Avatar">
+          <h1 class="f3 mb2 mt3 navy">{{ .Site.Title }}</h1>
+          <p class="f6 gray mv1">Backend Developer & AI Enthusiast</p>
+        </div>
+
+        <hr class="mw3 bb bw1 b--light-blue mv3 center">
+
+        <div class="f6 dark-gray">
+          <div class="mv2 flex items-center">
+            <span class="mr2">📍</span> 哈尔滨工业大学 (HIT)
+          </div>
+          <div class="mv2 flex items-center">
+            <span class="mr2">📧</span> rayx750@example.com
+          </div>
+          <div class="mv2 flex items-center">
+            <span class="mr2">🔗</span> <a href="https://github.com/RayX750" class="link blue dim">GitHub/RayX750</a>
+          </div>
+        </div>
+        
+        <div class="mt4">
+          <h3 class="f6 ttu tracked gray">Tech Stack</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">Java</span>
+            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">Python</span>
+            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">LLM/RAG</span>
+            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">Docker</span>
+            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">Spring</span>
+            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">PyTorch</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-100 w-75-l pl4-l">
+      
+      <div class="bg-white pa4 br3 shadow-1 mb4">
+        <div class="lh-copy f5 measure-wide-l mid-gray">
+           {{ .Content }}
+        </div>
+      </div>
+
+      <h3 class="f4 navy mb3 mt4 pb2 bb b--black-10">🚀 最近动态 (Latest Activities)</h3>
+      <div class="flex flex-column">
+        {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
+        {{ range $paginator.Pages }}
+          <div class="bg-white pa3 br3 shadow-1 mb3 dim pointer grow transition" style="border-left: 4px solid #357edd;">
+            <a href="{{ .RelPermalink }}" class="db no-underline dark-gray">
+              <div class="flex flex-column flex-row-ns justify-between items-baseline">
+                <h2 class="f4 fw6 lh-title mv0 blue">{{ .Title }}</h2>
+                <time class="f6 gray mt2 mt0-ns">{{ .Date.Format "2006-01-02" }}</time>
+              </div>
+              <p class="f6 lh-copy mv2 mid-gray">
+                {{ .Summary | truncate 120 }}
+              </p>
+              <div class="f7 mt2">
+                {{ range .Params.tags }}
+                  <span class="mr2 gray">#{{ . }}</span>
+                {{ end }}
+              </div>
+            </a>
+          </div>
+        {{ end }}
+      </div>
+      
+    </div>
+  </div>
+</div>
+{{ end }}

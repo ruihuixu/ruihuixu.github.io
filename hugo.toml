@@ -1,23 +1,43 @@
-baseURL = 'https://ruihuixu.github.io/' # 请确认这是你的 GitHub Pages 网址
+baseURL = 'https://rayx750.github.io/' # 请确认这里是你的 GitHub Pages 网址
 languageCode = 'zh-cn'
-title = 'Code & Thinking'
+title = 'HOME'
 theme = 'ananke'
+sectionPagesMenu = "main"
 
-# -----------------------------------------------------------
-# [修复点] 新版 Hugo 分页配置写法
-# 旧写法: paginate = 10 (已报错)
-# 新写法如下：
 [pagination]
   pagerSize = 10
-# -----------------------------------------------------------
 
 [params]
-  description = "记录代码与思考"
-  # featured_image = "/images/hero.jpg" 
+  description = "Backend Developer & AI Enthusiast | Focusing on LLM, Search & RecSys"
+  custom_css = ["css/custom.css"]
 
 [menu]
+  # 首页
+  
+  # Projects
   [[menu.main]]
-    identifier = "code-notes"
-    name = "Code Notes"
-    url = "/code-notes/"
+    identifier = "projects"
+    name = "Projects"
+    url = "/projects/"
     weight = 10
+
+  # 直接放 LeetCode
+  [[menu.main]]
+    identifier = "leetcode"
+    name = "Algorithms"  # 菜单上显示的名字
+    url = "/notes/leetcode/"
+    weight = 20
+
+  # 直接放 Interview
+  [[menu.main]]
+    identifier = "interview"
+    name = "Interview"
+    url = "/notes/interview/"
+    weight = 30
+    
+  # 直接放 Tech
+  [[menu.main]]
+    identifier = "tool"
+    name = "Tools"
+    url = "/notes/tools/"
+    weight = 40
