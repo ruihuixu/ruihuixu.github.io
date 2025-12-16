@@ -1,4 +1,4 @@
 ---
-title: "Tech & Tools"
+title: "Tools"
 description: "DevOps, tools and environment configurations."
 ---

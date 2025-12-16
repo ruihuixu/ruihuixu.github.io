@@ -2,7 +2,7 @@ baseURL = 'https://rayx750.github.io/' # 请确认这里是你的 GitHub Pages �
 languageCode = 'zh-cn'
 title = 'HOME'
 theme = 'ananke'
-sectionPagesMenu = "main"
+# sectionPagesMenu = "main"
 
 [pagination]
   pagerSize = 10
@@ -15,29 +15,29 @@ sectionPagesMenu = "main"
   # 首页
   
   # Projects
-  [[menu.main]]
-    identifier = "projects"
-    name = "Projects"
-    url = "/projects/"
-    weight = 10
+  # [[menu.main]]
+  #   identifier = "projects"
+  #   name = "Projects"
+  #   url = "/projects/"
+  #   weight = 10
 
   # 直接放 LeetCode
   [[menu.main]]
     identifier = "leetcode"
     name = "Algorithms"  # 菜单上显示的名字
-    url = "/notes/leetcode/"
+    url = "/leetcode/"
     weight = 20
 
   # 直接放 Interview
-  [[menu.main]]
-    identifier = "interview"
-    name = "Interview"
-    url = "/notes/interview/"
-    weight = 30
+  #[[menu.main]]
+  #  identifier = "interview"
+  #  name = "Interview"
+  #  url = "/interview/"
+  #  weight = 30
     
   # 直接放 Tech
   [[menu.main]]
     identifier = "tool"
     name = "Tools"
-    url = "/notes/tools/"
+    url = "/tools/"
     weight = 40

@@ -5,37 +5,37 @@
     
     <div class="w-100 w-25-l mb4 mb0-l">
       <div class="bg-white pa4 br3 shadow-1 sticky-l" style="top: 2rem;">
+        
         <div class="tc">
-          <img src="/images/me.jpg" class="br-100 h4 w4 dib ba b--black-10 pa1" alt="Avatar">
-          <h1 class="f3 mb2 mt3 navy">{{ .Site.Title }}</h1>
-          <p class="f6 gray mv1">Backend Developer & AI Enthusiast</p>
+          <img src="{{ .Site.Data.profile.avatar }}" class="br-100 h4 w4 dib ba b--black-10 pa1" alt="Avatar">
+          <h1 class="f3 mb2 mt3 navy">{{ .Site.Data.profile.name }}</h1>
+          <p class="f6 gray mv1">{{ .Site.Data.profile.bio }}</p>
         </div>
 
         <hr class="mw3 bb bw1 b--light-blue mv3 center">
 
         <div class="f6 dark-gray">
+          {{ range .Site.Data.profile.info }}
           <div class="mv2 flex items-center">
-            <span class="mr2">📍</span> 哈尔滨工业大学 (HIT)
+            <span class="mr2">{{ .icon }}</span>
+            {{ if .link }}
+              <a href="{{ .link }}" class="link blue dim" target="_blank">{{ .text }}</a>
+            {{ else }}
+              <span>{{ .text }}</span>
+            {{ end }}
           </div>
-          <div class="mv2 flex items-center">
-            <span class="mr2">📧</span> rayx750@example.com
-          </div>
-          <div class="mv2 flex items-center">
-            <span class="mr2">🔗</span> <a href="https://github.com/RayX750" class="link blue dim">GitHub/RayX750</a>
-          </div>
+          {{ end }}
         </div>
         
         <div class="mt4">
           <h3 class="f6 ttu tracked gray">Tech Stack</h3>
           <div class="flex flex-wrap gap-2">
-            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">Java</span>
-            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">Python</span>
-            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">LLM/RAG</span>
-            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">Docker</span>
-            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">Spring</span>
-            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">PyTorch</span>
+            {{ range .Site.Data.profile.skills }}
+            <span class="bg-lightest-blue navy pa1 ph2 br2 f7 mb1 mr1">{{ . }}</span>
+            {{ end }}
           </div>
         </div>
+
       </div>
     </div>
 

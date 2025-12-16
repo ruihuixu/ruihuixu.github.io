@@ -1,7 +1,3 @@
-/* 隐藏 Ananke 默认的黑色 Hero Header */
-header.bg-top {
-    display: none !important;
-}
 
 /* 调整全局字体 */
 body {

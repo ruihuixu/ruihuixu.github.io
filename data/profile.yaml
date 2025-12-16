@@ -1,0 +1,23 @@
+# 这里的配置将控制首页左侧栏的显示
+name: "Ruihui Xu"
+avatar: "/images/me.png" # 头像图片路径，放在 static 文件夹下
+bio: "Backend Developer & AI Enthusiast"
+
+# 个人信息 (图标可以是 emoji，也可以是 HTML 代码)
+info:
+  - icon: "📍"
+    text: "哈尔滨工业大学 (HIT)"
+  - icon: "📧"
+    text: "ruihuixu@foxmail.com" # 或者是你的真实邮箱
+  - icon: "🔗"
+    text: "GitHub/ruihuixu"
+    link: "https://github.com/ruihuixu" # 如果有 link，点击文字会跳转
+
+# 技能栈标签
+skills:
+  - "Java"
+  - "Python"
+  - "LLM/RAG"
+  - "Docker"
+  - "Spring"
+  - "PyTorch"
