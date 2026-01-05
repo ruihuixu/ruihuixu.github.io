@@ -1,5 +1,5 @@
 ---
-title: "LeetCode 704. 二分查找：深入理解循环不变量"
+title: "LeetCode 704. 二分查找：从模板到变体通杀"
 date: 2026-01-05T00:00:00+08:00
 draft: false
 tags:
@@ -8,57 +8,46 @@ tags:
   - "Java"
 categories:
   - "LeetCode"
-description: "二分查找代码虽短，细节却是魔鬼。本文对比左闭右闭与左闭右开两种写法，彻底搞懂边界条件。"
+description: "不仅搞懂左闭右闭与左闭右开的区别，更要掌握找边界、找插入点以及在值域上二分的通用解法。"
 ---
 
-> 题目链接： [704. Binary Search](https://leetcode.cn/problems/binary-search/description/)
+> 题目链接：[704. Binary Search](https://leetcode.cn/problems/binary-search/description/)
 >
 > 难度：简单 ｜ 标签：数组、二分查找
 
 ## 题目描述
 
-给定一个 n 个元素有序的（升序）整型数组 `nums` 和一个目标值 `target`，写一个函数搜索 `nums` 中的 `target`，如果 `target` 存在返回下标，否则返回 `-1`。
+给定一个有序整型数组 `nums` 和目标值 `target`，返回 `target` 的下标，不存在则返回 `-1`。假设数组元素互不重复。
 
-前提：数组中所有元素是不重复的。
+## 核心心智：先锁定“区间定义”，其他一切随之而来
 
-## 核心思考：循环不变量
+写二分时，脑子里只需要挂住两件事：
 
-二分查找代码虽短，但每次写的时候，总是在纠结两个细节：
+1. 我维护的搜索区间是闭的 `[left, right]`，还是左闭右开的 `[left, right)`？
+2. 我在循环里是否一直坚持这个定义，不做“半开半闭”的摇摆？
 
-- `while` 里面到底是 `<` 还是 `<=`？
-- `right` 更新的时候到底是 `mid` 还是 `mid - 1`？
+当你想清楚这两件事，`while` 条件和边界收缩就会自然长出来。
 
-其实如果不从原理上想清楚，光靠背是很容易混淆的。这里的核心概念叫 **循环不变量**（Loop Invariant）。说人话就是：你一开始定义的区间是什么样的，整个循环里就要一直遵守这个定义。
+## 模板一：左闭右闭 `[left, right]`（更直觉，推荐）
 
-通常就两种写法：左闭右闭 与 左闭右开。
-
-## 写法一：左闭右闭区间 `[left, right]`（推荐）
-
-这是最符合直觉的写法。我们定义 `target` 是在 `[left, right]` 这个闭区间里寻找。
-
-- **初始化**：`right = nums.length - 1`。因为是闭区间，`right` 指向的那个位置（最后一个元素）必须是有效的，可能会被取到。
-- **循环条件**：`while (left <= right)`。当 `left == right` 时（比如数组只有一个元素），`[0, 0]` 依然包含一个元素，是有效区间，所以必须还能进入循环再查一次。
-- **边界更新**：
-  - `nums[mid] > target`：`mid` 肯定不是目标值了，而且我们要在左半边找。因为区间是闭的，排除 `mid` 后右边界应为 `mid - 1`。
-  - `nums[mid] < target`：同理，左边界变成 `mid + 1`。
+- 定义：`target` 一直被限制在 `[left, right]`。
+- 初始化：`left = 0`，`right = nums.length - 1`（因为右边是闭的，必须是有效下标）。
+- 循环条件：`while (left <= right)`，当 `left == right` 时仍有一个候选元素。
+- 边界收缩：
+  - `nums[mid] > target` → 右边界收缩到 `mid - 1`。
+  - `nums[mid] < target` → 左边界收缩到 `mid + 1`。
 
 ```java
 public int search(int[] nums, int target) {
-    // 避免整型溢出，等同于 (left + right) / 2
     int left = 0;
-    int right = nums.length - 1; // 闭区间，right 指向最后一个元素
+    int right = nums.length - 1; // 闭区间
 
-    while (left <= right) { // 包含 left == right 的情况
-        int mid = left + (right - left) / 2;
-        int num = nums[mid];
-
-        if (num == target) {
-            return mid;
-        } else if (num > target) {
-            // target 在左区间，mid 既然不是，right 就要移一位
+    while (left <= right) { // left == right 依然有效
+        int mid = left + (right - left) / 2; // 防溢出写法
+        if (nums[mid] == target) return mid;
+        if (nums[mid] > target) {
             right = mid - 1;
         } else {
-            // target 在右区间，mid 既然不是，left 就要移一位
             left = mid + 1;
         }
     }
@@ -66,30 +55,23 @@ public int search(int[] nums, int target) {
 }
 ```
 
-## 写法二：左闭右开区间 `[left, right)`
+## 模板二：左闭右开 `[left, right)`
 
-这种写法在 C++ STL 的迭代器里很常见。我们定义 `target` 是在 `[left, right)` 这个左闭右开区间里。
-
-- **初始化**：`right = nums.length`。因为右边是开区间，`right` 取不到，所以可以指向数组长度（越界位置）。
-- **循环条件**：`while (left < right)`。当 `left == right` 时，`[1, 1)` 是空集，区间无效，循环结束。
-- **边界更新**：
-  - `nums[mid] > target`：右边界本来就是“开”的（不包含），所以直接 `right = mid`，新的区间 `[left, mid)` 就把 `mid` 排除在外了。
-  - `nums[mid] < target`：左边还是闭的，所以 `left = mid + 1`。
+- 定义：`target` 落在 `[left, right)`，右端不取。
+- 初始化：`left = 0`，`right = nums.length`（右端可以等于长度）。
+- 循环条件：`while (left < right)`，当 `left == right` 时区间为空。
+- 边界收缩：
+  - `nums[mid] > target` → 右边界收缩到 `mid`（无需 `-1`，因为右端开）。
+  - `nums[mid] < target` → 左边界收缩到 `mid + 1`。
 
 ```java
 public int search(int[] nums, int target) {
-    int left = 0;
-    int right = nums.length; // 开区间，right 取不到
-
-    while (left < right) { // left == right 时区间无效
+    int left = 0, right = nums.length; // 左闭右开
+    while (left < right) {
         int mid = left + (right - left) / 2;
-        int num = nums[mid];
-
-        if (num == target) {
-            return mid;
-        } else if (num > target) {
-            // 右边是开的，right = mid 会把 mid 排除在下一次搜索之外
-            right = mid;
+        if (nums[mid] == target) return mid;
+        if (nums[mid] > target) {
+            right = mid; // 右端开，直接收缩到 mid
         } else {
             left = mid + 1;
         }
@@ -98,16 +80,107 @@ public int search(int[] nums, int target) {
 }
 ```
 
-## 总结
+## 实战变体：把模板“拧成”面试常考题
 
-两种写法本质上没有高下之分，关键是逻辑自洽。
+### 1) 寻找插入位置（LeetCode 35）
 
-- 如果习惯 `right = nums.length - 1`，那就锁死 `while (left <= right)` 和 `right = mid - 1`。
-- 如果习惯 `right = nums.length`，那就锁死 `while (left < right)` 和 `right = mid`。
+思路：标准二分即可。若找到直接返回 `mid`；若找不到，循环结束时 `left` 正好指向“第一个大于 target 的位置”，也就是插入点。
 
-我自己更倾向于第一种（左闭右闭），逻辑上更顺畅，不用去想开闭区间的转换。
+```java
+public int searchInsert(int[] nums, int target) {
+    int left = 0, right = nums.length - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] == target) return mid;
+        if (nums[mid] > target) right = mid - 1; else left = mid + 1;
+    }
+    return left; // 未命中时，left 即插入位置
+}
+```
 
-## 复杂度
+### 2) 查找左右边界（LeetCode 34）
 
-- 时间复杂度：$O(log n)$
-- 空间复杂度：$O(1)$
+常见坑（写代码时脑子里过一遍）：
+
+- **短路顺序**：先判空再访问 `nums[right]`，否则空数组会越界。
+- **指针重置**：双循环方案，第二段查右边界前记得把 `left/right` 复位。
+- **结果校验**：找到的 `first`、`last` 必须满足 `first <= last`，否则返回 `[-1, -1]`。
+
+直观写法（两个循环分头找左右端点）：
+
+```java
+public int[] searchRange(int[] nums, int target) {
+    int n = nums.length;
+    if (n == 0 || target < nums[0] || target > nums[n - 1]) return new int[]{-1, -1};
+
+    // 找左边界：最左的 >= target
+    int left = 0, right = n - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] < target) left = mid + 1; else right = mid - 1;
+    }
+    int first = left;
+    if (first >= n || nums[first] != target) return new int[]{-1, -1};
+
+    // 找右边界：最右的 <= target
+    left = 0; right = n - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] > target) right = mid - 1; else left = mid + 1;
+    }
+    int last = right;
+    return new int[]{first, last};
+}
+```
+
+模板化写法（`lowerBound` 复用）：
+
+```java
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int start = lowerBound(nums, target);
+        if (start == nums.length || nums[start] != target) return new int[]{-1, -1};
+        int end = lowerBound(nums, target + 1) - 1;
+        return new int[]{start, end};
+    }
+
+    // 返回最小的 i，使得 nums[i] >= target；若不存在，返回 nums.length
+    private int lowerBound(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] >= target) right = mid - 1; else left = mid + 1;
+        }
+        return left;
+    }
+}
+```
+
+### 3) 在值域上二分（LeetCode 69）
+
+没有数组也能二分——值域天然有序。目标是找到最大的 `k`，使得 `k * k <= x < (k + 1) * (k + 1)`。
+
+```java
+public int mySqrt(int x) {
+    if (x == 0) return 0;
+    int left = 1, right = x, ans = 0;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if ((long) mid * mid <= x) { // 注意溢出
+            ans = mid; // 先收下这个可行解，再看能否更大
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return ans;
+}
+```
+
+## 总结：写二分时的“口头禅”
+
+- 先问自己：我维护的是闭区间还是左闭右开？然后死磕一致性。
+- 写 `mid` 时用 `left + (right - left) / 2`，不用担心溢出。
+- 没找到时，闭区间模板的 `left` 会落到“第一个大于 target”的位置，常用于插入点。
+- 找边界时，命中后不要急着返回，让条件继续收缩直到不满足为止。
+- 面对非数组场景（如开平方、分配问题），把“搜索范围”换成“答案的数值区间”，一样能二分。
