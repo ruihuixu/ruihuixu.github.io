@@ -1,14 +1,17 @@
 ---
 title: "LeetCode 704. 二分查找：从模板到变体通杀"
-date: 2026-01-05T00:00:00+08:00
+date: 2026-01-05T10:00:00+08:00
 draft: false
 tags:
   - "Algorithm"
+  - "Data Structure"
+  - "Array"
   - "Binary Search"
+  - "Interval Definition"
   - "Java"
 categories:
   - "LeetCode"
-description: "不仅搞懂左闭右闭与左闭右开的区别，更要掌握找边界、找插入点以及在值域上二分的通用解法。"
+description: "二分查找的本质是区间定义的一致性。本文建立统一模板：左闭右闭与左闭右开的对比，找边界、找插入点以及值域二分的通用解法。"
 ---
 
 > 题目链接：[704. Binary Search](https://leetcode.cn/problems/binary-search/description/)

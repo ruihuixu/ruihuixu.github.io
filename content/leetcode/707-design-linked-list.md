@@ -1,15 +1,17 @@
 ---
-title: "LeetCode 707. 设计链表：Dummy Head + Size 的经典实现（含易错点复盘）"
-date: 2026-01-19T00:00:00+08:00
+title: "LeetCode 707. 设计链表：增删改查的统一模板——Dummy Head + Size 模式"
+date: 2026-01-19T10:00:00+08:00
 draft: false
 tags:
   - "Algorithm"
   - "Data Structure"
   - "Linked List"
+  - "Design"
+  - "Dummy Node"
   - "Java"
 categories:
   - "LeetCode"
-description: "用虚拟头节点统一增删逻辑，用 size 管住边界：附常见坑与两版实现对照。"
+description: "链表设计的本质是用虚拟头节点统一增删逻辑，用 size 管住边界。本文提供两版实现对照，附常见易错点复盘与原子操作模板。"
 ---
 
 > 题目链接：[707. 设计链表](https://leetcode.cn/problems/design-linked-list/description/)
@@ -43,6 +45,127 @@ description: "用虚拟头节点统一增删逻辑，用 size 管住边界：附
    - 单向链表无法回退，因此增/删都围绕“前驱节点”操作：
      - 插入：`toAdd.next = pred.next; pred.next = toAdd`
      - 删除：`pred.next = pred.next.next`
+
+## 按操作拆解：增删改查的“原子步骤”模板（含反转延展）
+
+很多同学卡在这题，并不是思路不懂，而是对链表操作的“指针改动顺序”不够熟。下面把每个操作拆成可以直接背诵/套用的模板。
+
+> 约定：都有 `dummyHead` 与 `size`，并且所有定位都优先“找前驱 `pred`”。
+
+### 1）查：`get(index)` —— 先判边界，再走固定步数
+
+- **边界**：`index` 必须满足 `0 <= index < size`
+- **移动**：从 `dummyHead` 出发走 `index + 1` 步到目标节点
+
+```java
+public int get(int index) {
+    if (index < 0 || index >= size) return -1;
+
+    ListNode cur = dummyHead;
+    for (int i = 0; i <= index; i++) {
+        cur = cur.next;
+    }
+    return cur.val;
+}
+```
+
+### 2）增：`addAtIndex(index, val)` —— 找前驱，再“两连”
+
+- **边界**：
+  - `index > size`：不插入
+  - `index < 0`：按 `index = 0`（等价头插）
+- **定位前驱**：从 `dummyHead` 走 `index` 步到 `pred`
+- **指针原子操作（插入）**：
+  1. `toAdd.next = pred.next`
+  2. `pred.next = toAdd`
+- **维护 size**：插入成功后 `size++`
+
+```java
+public void addAtIndex(int index, int val) {
+    if (index > size) return;
+    if (index < 0) index = 0;
+
+    ListNode pred = dummyHead;
+    for (int i = 0; i < index; i++) {
+        pred = pred.next;
+    }
+
+    ListNode toAdd = new ListNode(val);
+    toAdd.next = pred.next;
+    pred.next = toAdd;
+    size++;
+}
+```
+
+对应地：
+
+- **头插**：`addAtIndex(0, val)`
+- **尾插**：`addAtIndex(size, val)`
+
+### 3）删：`deleteAtIndex(index)` —— 找前驱，再“一跳”
+
+- **边界**：`0 <= index < size`
+- **定位前驱**：从 `dummyHead` 走 `index` 步到 `pred`
+- **指针原子操作（删除）**：`pred.next = pred.next.next`
+- **维护 size**：删除成功后 `size--`
+
+```java
+public void deleteAtIndex(int index) {
+    if (index < 0 || index >= size) return;
+
+    ListNode pred = dummyHead;
+    for (int i = 0; i < index; i++) {
+        pred = pred.next;
+    }
+
+    pred.next = pred.next.next;
+    size--;
+}
+```
+
+### 4）改：更新第 `index` 个节点值（本题未要求，但属于同一套“查到节点再赋值”）
+
+- **边界**：`0 <= index < size`
+- **定位目标**：从 `dummyHead` 走 `index + 1` 步到 `cur`
+- **更新**：`cur.val = newVal`
+
+```java
+public void set(int index, int newVal) {
+    if (index < 0 || index >= size) return;
+
+    ListNode cur = dummyHead;
+    for (int i = 0; i <= index; i++) {
+        cur = cur.next;
+    }
+    cur.val = newVal;
+}
+```
+
+### 5）延展：反转链表（Reverse）也是同一类“指针扭转”的原子操作
+
+反转的本质不是“交换两个元素”，而是反复把一条边 `cur -> next` 扭转成 `cur -> prev`。
+
+- **核心原子操作（每轮 3 行）**：
+  1. 先保存：`next = cur.next`（否则链表会断）
+  2. 再反转：`cur.next = prev`
+  3. 再前进：`prev = cur; cur = next`
+
+```java
+public ListNode reverseList(ListNode head) {
+    ListNode prev = null;
+    ListNode cur = head;
+
+    while (cur != null) {
+        ListNode next = cur.next; // 1) 先保留后继
+        cur.next = prev;          // 2) 扭转指针
+        prev = cur;               // 3) 整体前进
+        cur = next;
+    }
+    return prev;
+}
+```
+
+你会发现它和“插入/删除”的共通点是：**永远先保住还需要访问的引用，再做指针改动**。
 
 ## 易错点与注意事项（Common Pitfalls）
 

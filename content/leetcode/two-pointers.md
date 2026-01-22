@@ -1,15 +1,19 @@
 ---
-title: "算法笔记：深入理解双指针思想 (Two Pointers)"
-date: 2026-01-18T00:00:00+08:00
-lastmod: 2026-01-18T23:00:00+08:00
+title: "双指针算法笔记：深入理解三种核心模式"
+date: 2026-01-18T10:00:00+08:00
+lastmod: 2026-01-24T12:00:00+08:00
 draft: false
 tags:
   - "Algorithm"
   - "Data Structure"
   - "Two Pointers"
+  - "Fast-Slow Pointers"
+  - "Collision Pointers"
+  - "Sliding Window"
+  - "Java"
 categories:
   - "LeetCode"
-description: "从快慢指针到滑动窗口，总结 LeetCode 中双指针法的核心解题模式与思维框架。"
+description: "双指针的本质是用两个指针维护不变量，降低时间复杂度。本文总结三种核心模式：快慢指针、对撞指针、滑动窗口，建立统一思维框架。"
 ---
 
 ## 引言
