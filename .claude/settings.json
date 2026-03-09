@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "WebSearch": {
+      "type": "sse",
+      "url": "https://dashscope.aliyuncs.com/api/v1/mcps/WebSearch/mcp",
+      "headers": {
+        "Authorization": "Bearer sk-sp-4e66a0b1b9c34099bab875582640e587"
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/rui/.claude/**)",
+      "Read(//c/Users/rui/.config/claude/**)",
+      "Bash(claude mcp:*)",
+      "Bash(curl:*)",
+      "WebSearch",
+      "WebFetch(domain:help.aliyun.com)",
+      "Bash(npm view:*)",
+      "WebFetch(domain:finance.sina.com.cn)",
+      "WebFetch(domain:quotes.eastmoney.com)",
+      "Bash(export:*)",
+      "mcp__WebSearch__bailian_web_search"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "WebSearch"
+  ]
+}
