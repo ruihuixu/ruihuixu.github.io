@@ -1,0 +1,55 @@
+{{ define "main" }}
+<div class="pa3 pa4-ns w-100" style="background-color: #E3F2FD; min-height: 100vh;">
+  <div class="mw9 center">
+
+    <!-- Header -->
+    <div class="content-card mb4">
+      <h1 class="section-title">
+        <span class="section-icon">🏷️</span>
+        {{ .Title }}
+      </h1>
+      <p class="f5 gray">
+        包含 {{ len .Pages }} 篇文章
+      </p>
+    </div>
+
+    <!-- Articles List -->
+    {{ if .Pages }}
+    <div class="flex flex-column">
+      {{ range .Pages.ByDate.Reverse }}
+      <div class="article-card">
+        <a href="{{ .RelPermalink }}" class="db no-underline">
+          <div class="flex flex-column flex-row-ns justify-between items-baseline">
+            <h3 class="article-title">{{ .Title }}</h3>
+            <time class="f6 gray mt2 mt0-ns">{{ .Date.Format "2006-01-02" }}</time>
+          </div>
+          <p class="article-summary">
+            {{ .Summary | truncate 150 }}
+          </p>
+          {{ if .Params.tags }}
+          <div class="article-tags">
+            {{ range .Params.tags }}
+              {{ if ne . "Algorithm" }}
+              <span class="article-tag">#{{ . }}</span>
+              {{ end }}
+            {{ end }}
+          </div>
+          {{ end }}
+        </a>
+      </div>
+      {{ end }}
+    </div>
+    {{ else }}
+    <p class="gray italic">该主题下暂无文章...</p>
+    {{ end }}
+
+    <!-- Back to tags list -->
+    <div class="tc mt4">
+      <a href="{{ "/tags/" | relLangURL }}" class="topic-more">
+        ← 返回主题列表
+      </a>
+    </div>
+
+  </div>
+</div>
+{{ end }}

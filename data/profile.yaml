@@ -8,10 +8,11 @@ info:
   - icon: "📍"
     text: "哈尔滨工业大学 (HIT)"
   - icon: "📧"
-    text: "ruihuixu@foxmail.com" # 或者是你的真实邮箱
+    text: "ruihuixu@foxmail.com"
+    link: "mailto:ruihuixu@foxmail.com"
   - icon: "🔗"
     text: "GitHub/ruihuixu"
-    link: "https://github.com/ruihuixu" # 如果有 link，点击文字会跳转
+    link: "https://github.com/ruihuixu"
 
 # 技能栈标签
 skills:
@@ -21,3 +22,23 @@ skills:
   - "Docker"
   - "Spring"
   - "PyTorch"
+
+# 教育经历
+education:
+  - school: "哈尔滨工业大学 (HIT)"
+    degree: "计算机科学与技术 (硕士)"
+    period: "2023 - 2026 (预计)"
+  - school: "本科院校"
+    degree: "计算机科学与技术 (学士)"
+    period: "2019 - 2023"
+
+# 核心成就
+achievements:
+  - title: '"圳智青春" AI Agent Challenge'
+    description: "决赛 Top 10%"
+    date: "2025.10"
+  - title: "英语六级 (CET-6)"
+    date: "2024.12"
+  - title: "学术论文"
+    description: "投稿于 ICME (In Review)"
+    date: "2024.09"

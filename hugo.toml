@@ -10,34 +10,61 @@ theme = 'ananke'
 [params]
   description = "Backend Developer & AI Enthusiast | Focusing on LLM, Search & RecSys"
   custom_css = ["css/custom.css"]
+  mainSections = ["notes", "misc", "projects"]
 
 [menu]
   # 首页
-  
-  # Projects
-  # [[menu.main]]
-  #   identifier = "projects"
-  #   name = "Projects"
-  #   url = "/projects/"
-  #   weight = 10
-
-  # 直接放 LeetCode
   [[menu.main]]
-    identifier = "leetcode"
-    name = "Algorithms"  # 菜单上显示的名字
-    url = "/leetcode/"
+    identifier = "home"
+    name = "首页"
+    url = "/"
+    weight = 0
+
+  # Projects
+  [[menu.main]]
+    identifier = "projects"
+    name = "科研与项目"
+    url = "/projects/"
+    weight = 10
+
+  # Notes 技术笔记 (带子菜单)
+  [[menu.main]]
+    identifier = "notes"
+    name = "技术笔记"
+    url = "/notes/"
     weight = 20
 
-  # 直接放 Interview
-  #[[menu.main]]
-  #  identifier = "interview"
-  #  name = "Interview"
-  #  url = "/interview/"
-  #  weight = 30
-    
-  # 直接放 Tech
   [[menu.main]]
-    identifier = "tool"
-    name = "Tools"
-    url = "/tools/"
+    identifier = "notes-code"
+    name = "算法题解"
+    url = "/notes/code/"
+    parent = "notes"
+    weight = 1
+
+  [[menu.main]]
+    identifier = "notes-tools"
+    name = "工具技术"
+    url = "/notes/tools/"
+    parent = "notes"
+    weight = 2
+
+  [[menu.main]]
+    identifier = "notes-recommendation"
+    name = "推荐算法"
+    url = "/notes/recommendation/"
+    parent = "notes"
+    weight = 3
+
+  # Misc 杂谈
+  [[menu.main]]
+    identifier = "misc"
+    name = "杂谈"
+    url = "/misc/"
+    weight = 30
+
+  # Tags 主题
+  [[menu.main]]
+    identifier = "tags"
+    name = "主题"
+    url = "/tags/"
     weight = 40

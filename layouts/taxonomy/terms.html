@@ -1,0 +1,85 @@
+{{ define "main" }}
+<div class="pa3 pa4-ns w-100" style="background-color: #E3F2FD; min-height: 100vh;">
+  <div class="mw9 center">
+
+    <!-- Header -->
+    <div class="content-card mb4">
+      <h1 class="section-title">
+        <span class="section-icon">🏷️</span>
+        {{ .Title }}
+      </h1>
+      <p class="f5 gray">
+        本站所有文章按主题分类展示
+      </p>
+    </div>
+
+    <!-- Tags Grid -->
+    {{ $tags := .Site.Taxonomies.tags }}
+    {{ if gt (len $tags) 0 }}
+    <div class="topics-grid">
+      {{ range $tags }}
+        {{ $tag := .Page.Title }}
+        {{ $count := len .Pages }}
+
+        {{/* Define icon mapping */}}
+        {{ $icon := "📌" }}
+        {{ if eq $tag "Dynamic Programming" }}{{ $icon = "🧩" }}
+        {{ else if eq $tag "Backtracking" }}{{ $icon = "🔄" }}
+        {{ else if eq $tag "Greedy" }}{{ $icon = "🎯" }}
+        {{ else if eq $tag "Tree" }}{{ $icon = "🌳" }}
+        {{ else if eq $tag "Linked List" }}{{ $icon = "🔗" }}
+        {{ else if eq $tag "String" }}{{ $icon = "📝" }}
+        {{ else if eq $tag "Monotonic Stack" }}{{ $icon = "📊" }}
+        {{ else if eq $tag "Two Pointers" }}{{ $icon = "👆" }}
+        {{ else if eq $tag "Hash Table" }}{{ $icon = "🗂️" }}
+        {{ else if eq $tag "Binary Search" }}{{ $icon = "🔍" }}
+        {{ else if eq $tag "Stack" }}{{ $icon = "📚" }}
+        {{ else if eq $tag "BFS" }}{{ $icon = "🌊" }}
+        {{ else if eq $tag "DFS" }}{{ $icon = "🔎" }}
+        {{ else if eq $tag "Research" }}{{ $icon = "📬" }}
+        {{ else if eq $tag "Competition" }}{{ $icon = "🏆" }}
+        {{ else if eq $tag "LLM" }}{{ $icon = "🤖" }}
+        {{ else if eq $tag "AI Agent" }}{{ $icon = "🧠" }}
+        {{ end }}
+
+        <div class="topic-card">
+          <a href="{{ .Page.RelPermalink }}" class="no-underline inherit-color db">
+            <div class="topic-header">
+              <span class="topic-icon">{{ $icon }}</span>
+              <h4 class="topic-title">{{ $tag }}</h4>
+              <span class="topic-count">{{ $count }} 篇</span>
+            </div>
+          </a>
+          <div class="topic-articles">
+            {{ range first 5 .Pages }}
+            <div class="topic-article-item">
+              <a href="{{ .RelPermalink }}" class="topic-article-link">
+                {{ .Title }}
+              </a>
+            </div>
+            {{ end }}
+            {{ if gt $count 5 }}
+            <div class="topic-more-link">
+              <a href="{{ .Page.RelPermalink }}" class="topic-more">
+                查看更多 →
+              </a>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    </div>
+    {{ else }}
+    <p class="gray italic">暂无主题分类...</p>
+    {{ end }}
+
+    <!-- Back to home -->
+    <div class="tc mt4">
+      <a href="{{ "/" | relLangURL }}" class="topic-more">
+        ← 返回首页
+      </a>
+    </div>
+
+  </div>
+</div>
+{{ end }}
