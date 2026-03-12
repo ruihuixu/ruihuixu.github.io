@@ -1,0 +1,71 @@
+<section class="section" id="misc">
+  <div class="section-header">
+    <h2 class="section-title">杂谈</h2>
+    <p class="section-subtitle">生活随笔，读书心得</p>
+  </div>
+
+  <div class="card-grid">
+    {{ $miscPages := where .Site.RegularPages "Section" "misc" }}
+    {{ range first 6 $miscPages }}
+      <article class="card fade-in">
+        <span class="card-icon">💭</span>
+        <h3 class="card-title">
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </h3>
+        <div class="card-meta">
+          <span>{{ .Date.Format "2006-01-02" }}</span>
+        </div>
+        <p class="card-description">
+          {{ .Summary | truncate 100 }}
+        </p>
+        <a href="{{ .RelPermalink }}" class="notes-more">
+          阅读全文
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </article>
+    {{ end }}
+  </div>
+
+  {{ if gt (len $miscPages) 6 }}
+    <div class="text-center mt-3">
+      <a href="/misc/" class="btn btn-secondary">
+        查看更多
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  {{ end }}
+
+  <!-- 读书笔记 -->
+  {{ $readingNotes := where .Site.RegularPages "Section" "misc/reading-notes" }}
+  {{ if gt (len $readingNotes) 0 }}
+    <div class="section-header mt-3">
+      <h2 class="section-title" style="font-size: var(--text-xl);">读书笔记</h2>
+    </div>
+    <div class="card-grid">
+      {{ range first 3 $readingNotes }}
+        <article class="card fade-in">
+          <span class="card-icon">📚</span>
+          <h3 class="card-title">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h3>
+          <div class="card-meta">
+            <span>{{ .Date.Format "2006-01-02" }}</span>
+          </div>
+          <p class="card-description">
+            {{ .Summary | truncate 100 }}
+          </p>
+          <a href="{{ .RelPermalink }}" class="notes-more">
+            阅读全文
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </article>
+      {{ end }}
+    </div>
+  {{ end }}
+</section>

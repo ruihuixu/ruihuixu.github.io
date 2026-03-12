@@ -1,55 +1,49 @@
 {{ define "main" }}
-<div class="pa3 pa4-ns w-100" style="background-color: #E3F2FD; min-height: 100vh;">
-  <div class="mw9 center">
-
-    <!-- Header -->
-    <div class="content-card mb4">
-      <h1 class="section-title">
-        <span class="section-icon">🏷️</span>
-        {{ .Title }}
-      </h1>
-      <p class="f5 gray">
-        包含 {{ len .Pages }} 篇文章
-      </p>
+  <section class="section">
+    <div class="section-header">
+      <h1 class="section-title">{{ .Title }}</h1>
+      <p class="section-subtitle">包含 {{ len .Pages }} 篇文章</p>
     </div>
 
-    <!-- Articles List -->
-    {{ if .Pages }}
-    <div class="flex flex-column">
-      {{ range .Pages.ByDate.Reverse }}
-      <div class="article-card">
-        <a href="{{ .RelPermalink }}" class="db no-underline">
-          <div class="flex flex-column flex-row-ns justify-between items-baseline">
-            <h3 class="article-title">{{ .Title }}</h3>
-            <time class="f6 gray mt2 mt0-ns">{{ .Date.Format "2006-01-02" }}</time>
-          </div>
-          <p class="article-summary">
-            {{ .Summary | truncate 150 }}
-          </p>
-          {{ if .Params.tags }}
-          <div class="article-tags">
-            {{ range .Params.tags }}
-              {{ if ne . "Algorithm" }}
-              <span class="article-tag">#{{ . }}</span>
+    <div class="article-list">
+      {{ if .Pages }}
+        {{ range .Pages.ByDate.Reverse }}
+          <article class="article-card-large fade-in">
+            <h2 class="article-card-large-title">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h2>
+            <div class="article-card-large-meta">
+              <time>{{ .Date.Format "2006-01-02" }}</time>
+              {{ if .Params.tags }}
+                <span>·</span>
+                <span>
+                  {{ range $i, $tag := .Params.tags }}
+                    {{ if $i }}, {{ end }}
+                    <a href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}/">{{ $tag }}</a>
+                  {{ end }}
+                </span>
               {{ end }}
-            {{ end }}
-          </div>
-          {{ end }}
-        </a>
-      </div>
+            </div>
+            <p class="article-card-large-summary">
+              {{ .Summary | truncate 150 }}
+            </p>
+            <a href="{{ .RelPermalink }}" class="notes-more">
+              阅读全文
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </article>
+        {{ end }}
+      {{ else }}
+        <p class="text-center" style="color: var(--text-secondary);">该主题下暂无文章...</p>
       {{ end }}
     </div>
-    {{ else }}
-    <p class="gray italic">该主题下暂无文章...</p>
-    {{ end }}
 
-    <!-- Back to tags list -->
-    <div class="tc mt4">
-      <a href="{{ "/tags/" | relLangURL }}" class="topic-more">
+    <div class="text-center mt-3">
+      <a href="{{ "/tags/" | relLangURL }}" class="btn btn-secondary">
         ← 返回主题列表
       </a>
     </div>
-
-  </div>
-</div>
+  </section>
 {{ end }}

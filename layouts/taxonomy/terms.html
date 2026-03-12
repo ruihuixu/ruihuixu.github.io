@@ -1,85 +1,69 @@
 {{ define "main" }}
-<div class="pa3 pa4-ns w-100" style="background-color: #E3F2FD; min-height: 100vh;">
-  <div class="mw9 center">
-
-    <!-- Header -->
-    <div class="content-card mb4">
-      <h1 class="section-title">
-        <span class="section-icon">🏷️</span>
-        {{ .Title }}
-      </h1>
-      <p class="f5 gray">
-        本站所有文章按主题分类展示
-      </p>
+  <section class="section">
+    <div class="section-header">
+      <h1 class="section-title">{{ .Title }}</h1>
+      <p class="section-subtitle">本站所有文章按主题分类展示</p>
     </div>
 
-    <!-- Tags Grid -->
     {{ $tags := .Site.Taxonomies.tags }}
     {{ if gt (len $tags) 0 }}
-    <div class="topics-grid">
-      {{ range $tags }}
-        {{ $tag := .Page.Title }}
-        {{ $count := len .Pages }}
+      <div class="card-grid">
+        {{ range $tagName, $tagData := $tags }}
+          {{ $count := len $tagData.Pages }}
 
-        {{/* Define icon mapping */}}
-        {{ $icon := "📌" }}
-        {{ if eq $tag "Dynamic Programming" }}{{ $icon = "🧩" }}
-        {{ else if eq $tag "Backtracking" }}{{ $icon = "🔄" }}
-        {{ else if eq $tag "Greedy" }}{{ $icon = "🎯" }}
-        {{ else if eq $tag "Tree" }}{{ $icon = "🌳" }}
-        {{ else if eq $tag "Linked List" }}{{ $icon = "🔗" }}
-        {{ else if eq $tag "String" }}{{ $icon = "📝" }}
-        {{ else if eq $tag "Monotonic Stack" }}{{ $icon = "📊" }}
-        {{ else if eq $tag "Two Pointers" }}{{ $icon = "👆" }}
-        {{ else if eq $tag "Hash Table" }}{{ $icon = "🗂️" }}
-        {{ else if eq $tag "Binary Search" }}{{ $icon = "🔍" }}
-        {{ else if eq $tag "Stack" }}{{ $icon = "📚" }}
-        {{ else if eq $tag "BFS" }}{{ $icon = "🌊" }}
-        {{ else if eq $tag "DFS" }}{{ $icon = "🔎" }}
-        {{ else if eq $tag "Research" }}{{ $icon = "📬" }}
-        {{ else if eq $tag "Competition" }}{{ $icon = "🏆" }}
-        {{ else if eq $tag "LLM" }}{{ $icon = "🤖" }}
-        {{ else if eq $tag "AI Agent" }}{{ $icon = "🧠" }}
+          {{/* 定义图标映射 */}}
+          {{ $icon := "📌" }}
+          {{ if eq $tagName "Dynamic Programming" }}{{ $icon = "🧩" }}
+          {{ else if eq $tagName "Backtracking" }}{{ $icon = "🔄" }}
+          {{ else if eq $tagName "Greedy" }}{{ $icon = "🎯" }}
+          {{ else if eq $tagName "Tree" }}{{ $icon = "🌳" }}
+          {{ else if eq $tagName "Linked List" }}{{ $icon = "🔗" }}
+          {{ else if eq $tagName "String" }}{{ $icon = "📝" }}
+          {{ else if eq $tagName "Monotonic Stack" }}{{ $icon = "📊" }}
+          {{ else if eq $tagName "Two Pointers" }}{{ $icon = "👆" }}
+          {{ else if eq $tagName "Hash Table" }}{{ $icon = "🗂️" }}
+          {{ else if eq $tagName "Binary Search" }}{{ $icon = "🔍" }}
+          {{ else if eq $tagName "Stack" }}{{ $icon = "📚" }}
+          {{ else if eq $tagName "BFS" }}{{ $icon = "🌊" }}
+          {{ else if eq $tagName "DFS" }}{{ $icon = "🔎" }}
+          {{ else if eq $tagName "Research" }}{{ $icon = "📬" }}
+          {{ else if eq $tagName "Competition" }}{{ $icon = "🏆" }}
+          {{ else if eq $tagName "LLM" }}{{ $icon = "🤖" }}
+          {{ else if eq $tagName "AI Agent" }}{{ $icon = "🧠" }}
+          {{ end }}
+
+          <article class="card fade-in">
+            <span class="card-icon">{{ $icon }}</span>
+            <h3 class="card-title">
+              <a href="{{ "/tags/" | relLangURL }}{{ $tagName | urlize }}/">{{ $tagName }}</a>
+            </h3>
+            <div class="card-meta">
+              <span>{{ $count }} 篇文章</span>
+            </div>
+            <div class="notes-article-list" style="margin-top: var(--spacing-md);">
+              {{ range first 5 $tagData.Pages }}
+                <div class="notes-article-item">
+                  <a href="{{ .RelPermalink }}" class="notes-article-link">
+                    {{ .Title }}
+                  </a>
+                </div>
+              {{ end }}
+              {{ if gt $count 5 }}
+                <div class="notes-more-link">
+                  <a href="{{ "/tags/" | relLangURL }}{{ $tagName | urlize }}/" class="notes-more">
+                    查看更多
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </a>
+                </div>
+              {{ end }}
+            </div>
+          </article>
         {{ end }}
-
-        <div class="topic-card">
-          <a href="{{ .Page.RelPermalink }}" class="no-underline inherit-color db">
-            <div class="topic-header">
-              <span class="topic-icon">{{ $icon }}</span>
-              <h4 class="topic-title">{{ $tag }}</h4>
-              <span class="topic-count">{{ $count }} 篇</span>
-            </div>
-          </a>
-          <div class="topic-articles">
-            {{ range first 5 .Pages }}
-            <div class="topic-article-item">
-              <a href="{{ .RelPermalink }}" class="topic-article-link">
-                {{ .Title }}
-              </a>
-            </div>
-            {{ end }}
-            {{ if gt $count 5 }}
-            <div class="topic-more-link">
-              <a href="{{ .Page.RelPermalink }}" class="topic-more">
-                查看更多 →
-              </a>
-            </div>
-            {{ end }}
-          </div>
-        </div>
-      {{ end }}
-    </div>
+      </div>
     {{ else }}
-    <p class="gray italic">暂无主题分类...</p>
+      <p class="text-center" style="color: var(--text-secondary);">暂无主题分类...</p>
     {{ end }}
-
-    <!-- Back to home -->
-    <div class="tc mt4">
-      <a href="{{ "/" | relLangURL }}" class="topic-more">
-        ← 返回首页
-      </a>
-    </div>
-
-  </div>
-</div>
+  </section>
 {{ end }}

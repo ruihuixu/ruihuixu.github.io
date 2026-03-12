@@ -1,0 +1,49 @@
+{{ define "main" }}
+  <article class="article-container">
+    <header class="article-header">
+      <h1 class="article-page-title">{{ .Title }}</h1>
+      <div class="article-page-meta">
+        <time>{{ .Date.Format "2006-01-02" }}</time>
+        {{ if .Params.tags }}
+          <span>·</span>
+          <span>
+            {{ range $i, $tag := .Params.tags }}
+              {{ if $i }}, {{ end }}
+              <a href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}/">{{ $tag }}</a>
+            {{ end }}
+          </span>
+        {{ end }}
+        {{ if .Params.categories }}
+          <span>·</span>
+          <span>
+            {{ range .Params.categories }}
+              {{ . }}
+            {{ end }}
+          </span>
+        {{ end }}
+      </div>
+    </header>
+
+    <div class="article-content">
+      {{ .Content }}
+    </div>
+
+    <!-- 文章导航 -->
+    {{ if or .PrevInSection .NextInSection }}
+      <nav class="article-nav" style="display: flex; justify-content: space-between; margin-top: var(--spacing-2xl); padding-top: var(--spacing-xl); border-top: 1px solid var(--border-primary);">
+        {{ if .PrevInSection }}
+          <a href="{{ .PrevInSection.RelPermalink }}" style="color: var(--text-secondary); max-width: 45%;">
+            <span style="font-size: var(--text-sm);">← 上一篇</span>
+            <div style="color: var(--accent-cyan); margin-top: var(--spacing-xs);">{{ .PrevInSection.Title }}</div>
+          </a>
+        {{ end }}
+        {{ if .NextInSection }}
+          <a href="{{ .NextInSection.RelPermalink }}" style="color: var(--text-secondary); max-width: 45%; text-align: right;">
+            <span style="font-size: var(--text-sm);">下一篇 →</span>
+            <div style="color: var(--accent-cyan); margin-top: var(--spacing-xs);">{{ .NextInSection.Title }}</div>
+          </a>
+        {{ end }}
+      </nav>
+    {{ end }}
+  </article>
+{{ end }}

@@ -1,0 +1,55 @@
+<section class="hero" id="home">
+  <!-- 背景效果 -->
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-particle"></div>
+    <div class="hero-particle"></div>
+    <div class="hero-particle"></div>
+    <div class="hero-particle"></div>
+    <div class="hero-particle"></div>
+  </div>
+
+  <div class="hero-container">
+    <div class="hero-content">
+      <p class="hero-greeting">你好，我是</p>
+      <h1 class="hero-title">
+        {{ .Site.Data.profile.name }}<br>
+        <span class="hero-title-highlight">{{ .Site.Data.profile.bio }}</span>
+      </h1>
+      <p class="hero-subtitle">
+        {{ .Site.Params.description }}
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">
+          查看项目
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="#notes" class="btn btn-secondary">
+          技术笔记
+        </a>
+        {{ if .Site.Data.profile.info }}
+          {{ range .Site.Data.profile.info }}
+            {{ if and .link (eq .icon "🔗") }}
+              <a href="{{ .link }}" target="_blank" rel="noopener" class="btn btn-secondary">
+                GitHub
+              </a>
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <div class="avatar-container">
+        <div class="avatar-ring"></div>
+        {{ if .Site.Data.profile.avatar }}
+          <img src="{{ .Site.Data.profile.avatar }}" alt="{{ .Site.Data.profile.name }}" class="avatar">
+        {{ else }}
+          <div class="avatar" style="background: var(--gradient-primary);"></div>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>

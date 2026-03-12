@@ -1,0 +1,53 @@
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-social">
+      {{ if .Site.Data.profile.info }}
+        {{ range .Site.Data.profile.info }}
+          {{ if and .link (eq .icon "📧") }}
+            <a href="{{ .link }}" class="footer-social-link" aria-label="Email">
+              ✉️
+            </a>
+          {{ end }}
+          {{ if and .link (eq .icon "🔗") }}
+            <a href="{{ .link }}" target="_blank" rel="noopener" class="footer-social-link" aria-label="GitHub">
+              🐙
+            </a>
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    </div>
+
+    <p class="footer-text">
+      &copy; {{ now.Year }} {{ .Site.Data.profile.name }}. All rights reserved.
+    </p>
+    <p class="footer-text">
+      Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a>
+    </p>
+  </div>
+</footer>
+
+<!-- 回到顶部按钮 -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M18 15l-6-6-6 6"/>
+  </svg>
+</button>
+
+<script>
+  // 回到顶部按钮
+  const backToTop = document.getElementById('backToTop');
+
+  if (backToTop) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>

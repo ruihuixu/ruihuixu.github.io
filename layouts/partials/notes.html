@@ -1,0 +1,97 @@
+<section class="section" id="notes">
+  <div class="section-header">
+    <h2 class="section-title">技术笔记</h2>
+    <p class="section-subtitle">记录学习历程，分享技术心得</p>
+  </div>
+
+  <div class="card-grid">
+    <!-- Code/算法题解 -->
+    {{ $codePages := where .Site.RegularPages "Section" "notes/code" }}
+    {{ if gt (len $codePages) 0 }}
+      <div class="notes-category-card fade-in">
+        <div class="notes-category-header">
+          <span class="notes-category-icon">💻</span>
+          <h3 class="notes-category-title">算法题解</h3>
+          <span class="notes-category-count">{{ len $codePages }} 篇</span>
+        </div>
+        <div class="notes-category-content">
+          <div class="notes-article-list">
+            {{ range first 8 $codePages }}
+              <div class="notes-article-item">
+                <a href="{{ .RelPermalink }}" class="notes-article-link">
+                  {{ .Title }}
+                </a>
+              </div>
+            {{ end }}
+          </div>
+          {{ if gt (len $codePages) 8 }}
+            <div class="notes-more-link">
+              <a href="/notes/code/" class="notes-more">
+                查看更多
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+
+    <!-- Tools/工具技术 -->
+    {{ $toolsPages := where .Site.RegularPages "Section" "notes/tools" }}
+    {{ if gt (len $toolsPages) 0 }}
+      <div class="notes-category-card fade-in">
+        <div class="notes-category-header">
+          <span class="notes-category-icon">🛠️</span>
+          <h3 class="notes-category-title">工具技术</h3>
+          <span class="notes-category-count">{{ len $toolsPages }} 篇</span>
+        </div>
+        <div class="notes-category-content">
+          <div class="notes-article-list">
+            {{ range first 8 $toolsPages }}
+              <div class="notes-article-item">
+                <a href="{{ .RelPermalink }}" class="notes-article-link">
+                  {{ .Title }}
+                </a>
+              </div>
+            {{ end }}
+          </div>
+          {{ if gt (len $toolsPages) 8 }}
+            <div class="notes-more-link">
+              <a href="/notes/tools/" class="notes-more">
+                查看更多
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+
+    <!-- Recommendation/推荐算法 -->
+    {{ $recPages := where .Site.RegularPages "Section" "notes/recommendation" }}
+    {{ if gt (len $recPages) 0 }}
+      <div class="notes-category-card fade-in">
+        <div class="notes-category-header">
+          <span class="notes-category-icon">🎯</span>
+          <h3 class="notes-category-title">推荐算法</h3>
+          <span class="notes-category-count">{{ len $recPages }} 篇</span>
+        </div>
+        <div class="notes-category-content">
+          <div class="notes-article-list">
+            {{ range first 8 $recPages }}
+              <div class="notes-article-item">
+                <a href="{{ .RelPermalink }}" class="notes-article-link">
+                  {{ .Title }}
+                </a>
+              </div>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    {{ end }}
+  </div>
+</section>

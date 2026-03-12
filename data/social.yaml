@@ -1,0 +1,23 @@
+# 社交链接配置
+# 这些配置用于页脚社交图标和 Hero 区 CTA 按钮
+
+github:
+  url: "https://github.com/ruihuixu"
+  label: "GitHub"
+
+email:
+  url: "mailto:ruihuixu@foxmail.com"
+  label: "Email"
+
+# 可扩展其他社交平台
+# twitter:
+#   url: "https://twitter.com/yourhandle"
+#   label: "Twitter"
+#
+# linkedin:
+#   url: "https://linkedin.com/in/yourprofile"
+#   label: "LinkedIn"
+#
+# zhihu:
+#   url: "https://www.zhihu.com/people/yourprofile"
+#   label: "Zhihu"

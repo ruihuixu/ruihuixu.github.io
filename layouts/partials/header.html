@@ -1,0 +1,46 @@
+<header class="header" id="header">
+  <div class="header-container">
+    <a href="{{ .Site.Home.RelPermalink }}" class="header-logo">
+      {{ .Site.Title }}
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="header-nav" id="headerNav">
+      {{ range .Site.Menus.main }}
+        {{ if not .HasChildren }}
+          <a href="{{ .URL }}" class="header-nav-link {{ if $.IsMenuCurrent `main` . }}active{{ end }}">
+            {{ .Name }}
+          </a>
+        {{ end }}
+      {{ end }}
+    </nav>
+  </div>
+</header>
+
+<script>
+  // 移动端菜单切换
+  const menuToggle = document.getElementById('menuToggle');
+  const headerNav = document.getElementById('headerNav');
+
+  if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      headerNav.classList.toggle('active');
+    });
+  }
+
+  // 滚动时添加阴影效果
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+</script>

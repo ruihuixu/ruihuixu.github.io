@@ -1,7 +1,7 @@
 baseURL = 'https://rayx750.github.io/' # 请确认这里是你的 GitHub Pages 网址
 languageCode = 'zh-cn'
 title = 'HOME'
-theme = 'ananke'
+# theme = 'ananke' # Disabled for custom theme
 # sectionPagesMenu = "main"
 
 [pagination]
@@ -9,7 +9,6 @@ theme = 'ananke'
 
 [params]
   description = "Backend Developer & AI Enthusiast | Focusing on LLM, Search & RecSys"
-  custom_css = ["css/custom.css"]
   mainSections = ["notes", "misc", "projects"]
 
 [menu]
