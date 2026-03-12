@@ -1,6 +1,6 @@
 baseURL = 'https://rayx750.github.io/' # 请确认这里是你的 GitHub Pages 网址
 languageCode = 'zh-cn'
-title = 'HOME'
+title = 'Ruihui Xu' # 网站标题
 # theme = 'ananke' # Disabled for custom theme
 # sectionPagesMenu = "main"
 
@@ -60,10 +60,3 @@ title = 'HOME'
     name = "杂谈"
     url = "/misc/"
     weight = 30
-
-  # Tags 主题
-  [[menu.main]]
-    identifier = "tags"
-    name = "主题"
-    url = "/tags/"
-    weight = 40

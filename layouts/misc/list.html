@@ -1,0 +1,39 @@
+{{ define "main" }}
+  <section class="section">
+    <div class="section-header">
+      <h1 class="section-title">{{ .Title }}</h1>
+      <p class="section-subtitle">生活随笔，读书心得</p>
+    </div>
+
+    <div class="article-list">
+      {{ range .Pages }}
+        <article class="article-card-large fade-in">
+          <h2 class="article-card-large-title">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h2>
+          <div class="article-card-large-meta">
+            <time>{{ .Date.Format "2006-01-02" }}</time>
+            {{ if .Params.tags }}
+              <span>·</span>
+              <span>
+                {{ range $i, $tag := .Params.tags }}
+                  {{ if $i }}, {{ end }}
+                  <a href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}/">{{ $tag }}</a>
+                {{ end }}
+              </span>
+            {{ end }}
+          </div>
+          <p class="article-card-large-summary">
+            {{ .Summary | truncate 150 }}
+          </p>
+          <a href="{{ .RelPermalink }}" class="notes-more">
+            阅读全文
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </article>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

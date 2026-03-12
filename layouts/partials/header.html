@@ -16,6 +16,23 @@
           <a href="{{ .URL }}" class="header-nav-link {{ if $.IsMenuCurrent `main` . }}active{{ end }}">
             {{ .Name }}
           </a>
+        {{ else }}
+          <!-- 有子菜单的项 -->
+          <div class="header-nav-dropdown">
+            <a href="{{ .URL }}" class="header-nav-link dropdown-toggle {{ if $.HasMenuCurrent `main` . }}active{{ end }}">
+              {{ .Name }}
+              <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </a>
+            <div class="dropdown-menu">
+              {{ range .Children }}
+                <a href="{{ .URL }}" class="dropdown-item {{ if $.IsMenuCurrent `main` . }}active{{ end }}">
+                  {{ .Name }}
+                </a>
+              {{ end }}
+            </div>
+          </div>
         {{ end }}
       {{ end }}
     </nav>
@@ -42,5 +59,17 @@
     } else {
       header.classList.remove('scrolled');
     }
+  });
+
+  // 下拉菜单点击处理（移动端）
+  document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+    toggle.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        const menu = toggle.nextElementSibling;
+        menu.classList.toggle('active');
+        toggle.classList.toggle('open');
+      }
+    });
   });
 </script>
