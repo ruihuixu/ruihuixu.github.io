@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 初始化移动端菜单
   initMobileMenu();
+
+  // 初始化卡片点击
+  initCardClick();
 });
 
 /**
@@ -117,4 +120,31 @@ function initLazyLoading() {
   });
 
   images.forEach(img => imageObserver.observe(img));
+}
+
+/**
+ * 卡片点击跳转 - 整个卡片可点击，但排除标签等内部元素
+ */
+function initCardClick() {
+  // 处理普通卡片 (.card)
+  document.querySelectorAll('.card[data-url]').forEach(card => {
+    card.addEventListener('click', (e) => {
+      // 如果点击的是标签或其他带有 data-no-click 的元素，不跳转
+      if (e.target.closest('[data-no-click]')) {
+        return;
+      }
+      // 跳转到文章页面
+      window.location.href = card.dataset.url;
+    });
+  });
+
+  // 处理大卡片 (.article-card-large)
+  document.querySelectorAll('.article-card-large[data-url]').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('[data-no-click]')) {
+        return;
+      }
+      window.location.href = card.dataset.url;
+    });
+  });
 }

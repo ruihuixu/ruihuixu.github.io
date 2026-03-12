@@ -12,51 +12,58 @@ title = 'Ruihui Xu' # 网站标题
   mainSections = ["notes", "misc", "projects"]
 
 [menu]
-  # 首页
+  # Home - Left side
   [[menu.main]]
     identifier = "home"
-    name = "首页"
+    name = "HOME"
     url = "/"
     weight = 0
+
+  # Profile - Right side
+  [[menu.main]]
+    identifier = "profile"
+    name = "Profile"
+    url = "/profile/"
+    weight = 10
 
   # Projects
   [[menu.main]]
     identifier = "projects"
-    name = "科研与项目"
+    name = "Projects"
     url = "/projects/"
-    weight = 10
+    weight = 20
 
-  # Notes 技术笔记 (带子菜单)
+  # Notes (with submenus)
   [[menu.main]]
     identifier = "notes"
-    name = "技术笔记"
+    name = "Notes"
     url = "/notes/"
-    weight = 20
+    weight = 30
 
   [[menu.main]]
     identifier = "notes-code"
-    name = "算法题解"
+    name = "Code"
     url = "/notes/code/"
     parent = "notes"
     weight = 1
 
   [[menu.main]]
     identifier = "notes-tools"
-    name = "工具技术"
+    name = "Tools"
     url = "/notes/tools/"
     parent = "notes"
     weight = 2
 
   [[menu.main]]
     identifier = "notes-recommendation"
-    name = "推荐算法"
+    name = "Recommendation"
     url = "/notes/recommendation/"
     parent = "notes"
     weight = 3
 
-  # Misc 杂谈
+  # Misc
   [[menu.main]]
     identifier = "misc"
-    name = "杂谈"
+    name = "Misc"
     url = "/misc/"
-    weight = 30
+    weight = 40

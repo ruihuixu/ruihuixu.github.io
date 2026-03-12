@@ -1,23 +1,31 @@
 <header class="header" id="header">
   <div class="header-container">
-    <a href="{{ .Site.Home.RelPermalink }}" class="header-logo">
-      {{ .Site.Title }}
-    </a>
-
-    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
-    <nav class="header-nav" id="headerNav">
+    <!-- 左侧导航 -->
+    <nav class="header-nav-left">
       {{ range .Site.Menus.main }}
-        {{ if not .HasChildren }}
+        {{ if eq .Weight 0 }}
+          <a href="{{ .URL }}" class="header-nav-link header-home-link {{ if $.IsMenuCurrent `main` . }}active{{ end }}">
+            {{ .Name }}
+          </a>
+        {{ end }}
+      {{ end }}
+    </nav>
+
+    <!-- 右侧导航 -->
+    <nav class="header-nav-right">
+      {{ range .Site.Menus.main }}
+        {{ if eq .Pre "right" }}
+          <!-- Profile 作为普通链接 -->
           <a href="{{ .URL }}" class="header-nav-link {{ if $.IsMenuCurrent `main` . }}active{{ end }}">
             {{ .Name }}
           </a>
-        {{ else }}
-          <!-- 有子菜单的项 -->
+        {{ else if and (ne .Weight 0) (not .HasChildren) }}
+          <!-- 没有子菜单且不是 HOME 的项 (Projects, Misc, Profile) -->
+          <a href="{{ .URL }}" class="header-nav-link {{ if $.IsMenuCurrent `main` . }}active{{ end }}">
+            {{ .Name }}
+          </a>
+        {{ else if and (ne .Weight 0) .HasChildren }}
+          <!-- 有子菜单且不是 HOME 的项 (Notes) -->
           <div class="header-nav-dropdown">
             <a href="javascript:void(0)" class="header-nav-link dropdown-toggle {{ if $.HasMenuCurrent `main` . }}active{{ end }}">
               {{ .Name }}
@@ -36,18 +44,26 @@
         {{ end }}
       {{ end }}
     </nav>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </header>
 
 <script>
   // 移动端菜单切换
   const menuToggle = document.getElementById('menuToggle');
-  const headerNav = document.getElementById('headerNav');
+  const headerNavLeft = document.querySelector('.header-nav-left');
+  const headerNavRight = document.querySelector('.header-nav-right');
 
   if (menuToggle) {
     menuToggle.addEventListener('click', () => {
       menuToggle.classList.toggle('active');
-      headerNav.classList.toggle('active');
+      headerNavLeft.classList.toggle('active');
+      headerNavRight.classList.toggle('active');
     });
   }
 

@@ -7,7 +7,7 @@
 
     <div class="card-grid">
       {{ range .Pages }}
-        <article class="card project-card fade-in">
+        <article class="card project-card fade-in" data-url="{{ .RelPermalink }}">
           <span class="card-icon">🚀</span>
           <h3 class="card-title">
             <a href="{{ .RelPermalink }}">{{ .Title }}</a>
@@ -15,14 +15,14 @@
           <div class="card-meta">
             <span>{{ .Date.Format "2006.01" }}</span>
             {{ range .Params.tags }}
-              <span class="tag">{{ . }}</span>
+              <span class="tag" data-no-click>{{ . }}</span>
             {{ end }}
           </div>
           <p class="card-description">
             {{ .Description | default .Summary | truncate 120 }}
           </p>
           {{ if or .Params.github .Params.demo .Params.paper }}
-            <div class="card-links">
+            <div class="card-links" data-no-click>
               {{ if .Params.github }}
                 <a href="{{ .Params.github }}" target="_blank" rel="noopener" class="project-link">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -53,12 +53,6 @@
                   Paper
                 </a>
               {{ end }}
-              <a href="{{ .RelPermalink }}" class="project-link">
-                阅读全文
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </a>
             </div>
           {{ end }}
         </article>

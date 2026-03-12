@@ -271,3 +271,41 @@
   z-index: 1001;
   transition: width 0.1s ease;
 }
+
+/* 返回上一页按钮 */
+.back-to-home {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--text-sm);
+  color: var(--accent-cyan);
+  text-decoration: none;
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-base);
+  border: 1px solid transparent;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.back-to-home:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--accent-cyan);
+  text-decoration: none;
+  color: var(--accent-cyan);
+}
+
+.back-to-home svg {
+  transition: transform var(--transition-base);
+}
+
+.back-to-home:hover svg {
+  transform: translateX(-4px);
+}
+
+/* 文章 header 间距优化 */
+.article-header {
+  padding-top: calc(var(--spacing-3xl) + 2rem);
+}

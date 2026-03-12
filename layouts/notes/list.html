@@ -2,105 +2,41 @@
   <section class="section">
     <div class="section-header">
       <h1 class="section-title">{{ .Title }}</h1>
-      <p class="section-subtitle">记录学习历程，分享技术心得</p>
+      {{ if .Description }}
+        <p class="section-subtitle">{{ .Description }}</p>
+      {{ end }}
     </div>
 
-    <!-- 子分类卡片 -->
     <div class="card-grid">
-      {{ $codePages := where .Site.RegularPages "Section" "notes/code" }}
-      {{ if gt (len $codePages) 0 }}
-        <div class="notes-category-card fade-in">
-          <div class="notes-category-header">
-            <span class="notes-category-icon">💻</span>
-            <h3 class="notes-category-title">算法题解</h3>
-            <span class="notes-category-count">{{ len $codePages }} 篇</span>
-          </div>
-          <div class="notes-category-content">
-            <div class="notes-article-list">
-              {{ range first 10 $codePages }}
-                <div class="notes-article-item">
-                  <a href="{{ .RelPermalink }}" class="notes-article-link">
-                    {{ .Title }}
-                  </a>
-                </div>
-              {{ end }}
-            </div>
-            {{ if gt (len $codePages) 10 }}
-              <div class="notes-more-link">
-                <a href="/notes/code/" class="notes-more">
-                  查看更多
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </a>
-              </div>
+      {{/* 获取所有技术笔记并按时间倒序排序 */}}
+      {{ $allNotes := where .Site.RegularPages "Section" "notes" }}
+      {{ $sortedNotes := $allNotes.ByDate.Reverse }}
+      {{ range $sortedNotes }}
+        <article class="card fade-in" data-url="{{ .RelPermalink }}">
+          <span class="card-icon">
+            {{ if eq .Section "notes/code" }}💻
+            {{ else if eq .Section "notes/tools" }}🛠️
+            {{ else if eq .Section "notes/recommendation" }}🎯
+            {{ else }}📝
+            {{ end }}
+          </span>
+          <h3 class="card-title">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h3>
+          <div class="card-meta">
+            <span>{{ .Date.Format "2006-01-02" }}</span>
+            {{ if eq .Section "notes/code" }}
+              <span class="tag" data-no-click>算法题解</span>
+            {{ else if eq .Section "notes/tools" }}
+              <span class="tag" data-no-click>工具技术</span>
+            {{ else if eq .Section "notes/recommendation" }}
+              <span class="tag" data-no-click>推荐算法</span>
             {{ end }}
           </div>
-        </div>
-      {{ end }}
-
-      {{ $toolsPages := where .Site.RegularPages "Section" "notes/tools" }}
-      {{ if gt (len $toolsPages) 0 }}
-        <div class="notes-category-card fade-in">
-          <div class="notes-category-header">
-            <span class="notes-category-icon">🛠️</span>
-            <h3 class="notes-category-title">工具技术</h3>
-            <span class="notes-category-count">{{ len $toolsPages }} 篇</span>
-          </div>
-          <div class="notes-category-content">
-            <div class="notes-article-list">
-              {{ range first 10 $toolsPages }}
-                <div class="notes-article-item">
-                  <a href="{{ .RelPermalink }}" class="notes-article-link">
-                    {{ .Title }}
-                  </a>
-                </div>
-              {{ end }}
-            </div>
-            {{ if gt (len $toolsPages) 10 }}
-              <div class="notes-more-link">
-                <a href="/notes/tools/" class="notes-more">
-                  查看更多
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </a>
-              </div>
-            {{ end }}
-          </div>
-        </div>
-      {{ end }}
-
-      {{ $recPages := where .Site.RegularPages "Section" "notes/recommendation" }}
-      {{ if gt (len $recPages) 0 }}
-        <div class="notes-category-card fade-in">
-          <div class="notes-category-header">
-            <span class="notes-category-icon">🎯</span>
-            <h3 class="notes-category-title">推荐算法</h3>
-            <span class="notes-category-count">{{ len $recPages }} 篇</span>
-          </div>
-          <div class="notes-category-content">
-            <div class="notes-article-list">
-              {{ range first 10 $recPages }}
-                <div class="notes-article-item">
-                  <a href="{{ .RelPermalink }}" class="notes-article-link">
-                    {{ .Title }}
-                  </a>
-                </div>
-              {{ end }}
-            </div>
-            {{ if gt (len $recPages) 10 }}
-              <div class="notes-more-link">
-                <a href="/notes/recommendation/" class="notes-more">
-                  查看更多
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </a>
-              </div>
-            {{ end }}
-          </div>
-        </div>
+          <p class="card-description">
+            {{ .Summary | truncate 100 }}
+          </p>
+        </article>
       {{ end }}
     </div>
   </section>

@@ -7,7 +7,7 @@
 
     <div class="article-list">
       {{ range .Pages }}
-        <article class="article-card-large fade-in">
+        <article class="article-card-large fade-in" data-url="{{ .RelPermalink }}">
           <h2 class="article-card-large-title">
             <a href="{{ .RelPermalink }}">{{ .Title }}</a>
           </h2>
@@ -18,7 +18,7 @@
               <span>
                 {{ range $i, $tag := .Params.tags }}
                   {{ if $i }}, {{ end }}
-                  <a href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}/">{{ $tag }}</a>
+                  <a href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}/" class="tag" data-no-click>{{ $tag }}</a>
                 {{ end }}
               </span>
             {{ end }}
@@ -26,12 +26,6 @@
           <p class="article-card-large-summary">
             {{ .Summary | truncate 150 }}
           </p>
-          <a href="{{ .RelPermalink }}" class="notes-more">
-            阅读全文
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
         </article>
       {{ end }}
     </div>
