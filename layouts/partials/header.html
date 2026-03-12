@@ -19,7 +19,7 @@
         {{ else }}
           <!-- 有子菜单的项 -->
           <div class="header-nav-dropdown">
-            <a href="{{ .URL }}" class="header-nav-link dropdown-toggle {{ if $.HasMenuCurrent `main` . }}active{{ end }}">
+            <a href="javascript:void(0)" class="header-nav-link dropdown-toggle {{ if $.HasMenuCurrent `main` . }}active{{ end }}">
               {{ .Name }}
               <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M6 9l6 6 6-6"/>

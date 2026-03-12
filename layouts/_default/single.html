@@ -1,14 +1,17 @@
 {{ define "main" }}
+  <!-- 阅读进度条 -->
+  <div class="article-progress" id="articleProgress"></div>
+
   <article class="article-container">
     <header class="article-header">
       <h1 class="article-page-title">{{ .Title }}</h1>
       <div class="article-page-meta">
-        <time>{{ .Date.Format "2006-01-02" }}</time>
+        <span>📅 {{ .Date.Format "2006-01-02" }}</span>
         {{ if .Params.tags }}
           <span>·</span>
           <span>
             {{ range $i, $tag := .Params.tags }}
-              {{ if $i }}, {{ end }}
+              {{ if $i }}}, {{ end }}
               <a href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}/">{{ $tag }}</a>
             {{ end }}
           </span>
@@ -21,6 +24,8 @@
             {{ end }}
           </span>
         {{ end }}
+        <span>·</span>
+        <span>⏱️ {{ .ReadingTime }} 分钟阅读</span>
       </div>
     </header>
 
@@ -30,20 +35,99 @@
 
     <!-- 文章导航 -->
     {{ if or .PrevInSection .NextInSection }}
-      <nav class="article-nav" style="display: flex; justify-content: space-between; margin-top: var(--spacing-2xl); padding-top: var(--spacing-xl); border-top: 1px solid var(--border-primary);">
+      <nav class="article-nav">
         {{ if .PrevInSection }}
-          <a href="{{ .PrevInSection.RelPermalink }}" style="color: var(--text-secondary); max-width: 45%;">
-            <span style="font-size: var(--text-sm);">← 上一篇</span>
-            <div style="color: var(--accent-cyan); margin-top: var(--spacing-xs);">{{ .PrevInSection.Title }}</div>
+          <a href="{{ .PrevInSection.RelPermalink }}" class="article-nav-link prev">
+            <span class="article-nav-label">← 上一篇</span>
+            <span class="article-nav-title">{{ .PrevInSection.Title }}</span>
           </a>
+        {{ else }}
+          <div></div>
         {{ end }}
         {{ if .NextInSection }}
-          <a href="{{ .NextInSection.RelPermalink }}" style="color: var(--text-secondary); max-width: 45%; text-align: right;">
-            <span style="font-size: var(--text-sm);">下一篇 →</span>
-            <div style="color: var(--accent-cyan); margin-top: var(--spacing-xs);">{{ .NextInSection.Title }}</div>
+          <a href="{{ .NextInSection.RelPermalink }}" class="article-nav-link next">
+            <span class="article-nav-label">下一篇 →</span>
+            <span class="article-nav-title">{{ .NextInSection.Title }}</span>
           </a>
         {{ end }}
       </nav>
     {{ end }}
   </article>
+
+  <style>
+    .article-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+      margin-top: var(--spacing-3xl);
+      padding-top: var(--spacing-xl);
+      border-top: 1px solid var(--border-primary);
+    }
+
+    .article-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-lg);
+      border-radius: var(--radius-md);
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-secondary);
+      transition: all var(--transition-base);
+    }
+
+    .article-nav-link:hover {
+      background: var(--bg-elevated);
+      border-color: var(--accent-cyan);
+      text-decoration: none;
+    }
+
+    .article-nav-label {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    .article-nav-title {
+      font-size: var(--text-base);
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+
+    .article-nav-link.prev {
+      text-align: left;
+    }
+
+    .article-nav-link.next {
+      text-align: right;
+      grid-column: 2;
+    }
+
+    @media (max-width: 768px) {
+      .article-nav {
+        grid-template-columns: 1fr;
+      }
+
+      .article-nav-link.next {
+        grid-column: 1;
+      }
+    }
+  </style>
+
+  <script>
+    // 阅读进度条
+    window.addEventListener('scroll', () => {
+      const article = document.querySelector('.article-content');
+      const progress = document.getElementById('articleProgress');
+      if (article && progress) {
+        const articleTop = article.offsetTop;
+        const articleHeight = article.offsetHeight;
+        const windowHeight = window.innerHeight;
+        const scrollPosition = window.scrollY;
+
+        const totalHeight = articleTop + articleHeight - windowHeight;
+        const progressPercent = Math.min(100, Math.max(0, ((scrollPosition - articleTop + windowHeight) / totalHeight) * 100));
+
+        progress.style.width = progressPercent + '%';
+      }
+    });
+  </script>
 {{ end }}
