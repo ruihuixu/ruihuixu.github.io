@@ -1,0 +1,18 @@
+{{ $section := .section | default .Section }}
+{{ $icon := "" }}
+{{ if eq $section "notes/code" }}
+  {{ $icon = "💻" }}
+{{ else if eq $section "notes/tools" }}
+  {{ $icon = "🛠️" }}
+{{ else if eq $section "notes/recommendation" }}
+  {{ $icon = "🎯" }}
+{{ else if eq $section "misc" }}
+  {{ $icon = "💭" }}
+{{ else if eq $section "projects" }}
+  {{ $icon = "🚀" }}
+{{ else if eq $section "misc/reading-notes" }}
+  {{ $icon = "📚" }}
+{{ else }}
+  {{ $icon = "📝" }}
+{{ end }}
+{{- $icon -}}

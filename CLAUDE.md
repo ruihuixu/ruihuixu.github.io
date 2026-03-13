@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Hugo static blog deployed to GitHub Pages, using the Ananke theme as a git submodule.
+Hugo static blog deployed to GitHub Pages with custom dark tech theme.
 
 ## Commands
 
@@ -33,11 +33,11 @@ git submodule update --init --recursive
 
 | Path | Purpose |
 |------|---------|
-| `content/` | Markdown content (leetcode, tools, projects, interview) |
-| `data/profile.yaml` | Sidebar profile config (name, avatar, bio, skills) |
+| `content/` | Markdown content (notes/code, notes/tools, notes/recommendation, projects, misc) |
+| `data/profile.yaml` | Profile config (name, avatar, bio, info, skills, education, achievements) |
 | `hugo.toml` | Site config, menus, params |
-| `layouts/` | Custom templates (if any) |
-| `static/` | Static assets (images, CSS) |
+| `layouts/` | Custom templates (index, partials, list, single) |
+| `static/` | Static assets (images, CSS, JS) |
 | `themes/ananke/` | Theme submodule (do not modify directly) |
 
 ## Content Conventions
@@ -46,17 +46,18 @@ git submodule update --init --recursive
 - **Articles**: `content/{section}/{article}.md`
 - **Front matter**: YAML format (`--- ... ---`)
 - **Tags**: Use YAML list format
-- **LeetCode section**: Uses `cascade.tags` for default "Algorithm" tag
+- **Notes section**: `content/notes/code/_index.md` uses `cascade.tags` for default "Algorithm" tag
 
 ## Theme Overrides
 
-Use Hugo lookup order to override theme files without modifying the submodule:
+Custom dark tech theme implemented in:
 
-| Purpose | Override Path |
-|---------|---------------|
+| Purpose | File |
+|---------|------|
 | Homepage | `layouts/index.html` |
-| Header | `layouts/partials/site-header.html` |
-| Custom CSS | `static/css/custom.css` (loaded via `params.custom_css`) |
+| Header | `layouts/partials/header.html` |
+| Main CSS | `static/css/main.css` |
+| Article CSS | `static/css/article.css` |
 
 ## Do Not Modify
 
@@ -69,4 +70,4 @@ Use Hugo lookup order to override theme files without modifying the submodule:
 ## Instructions
 
 - `.github/copilot-instructions.md`: Persona and workflow guidelines
-- `.github/instructions/leetcode-writing-guide.md`: LeetCode article writing standard (applies to `content/leetcode/**/*.md`)
+- `.github/instructions/leetcode-writing-guide.md`: LeetCode article writing standard (applies to `content/notes/code/**/*.md`)

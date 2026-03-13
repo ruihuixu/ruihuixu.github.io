@@ -17,6 +17,7 @@
   --accent-green: #3fb950;
   --accent-orange: #d29922;
   --accent-pink: #db6d9e;
+  --accent-red: #f85149;
 
   /* 文字色 */
   --text-primary: #f0f6fc;
@@ -33,6 +34,7 @@
   --gradient-cyan: linear-gradient(135deg, #58a6ff 0%, #2f81f7 100%);
   --gradient-purple: linear-gradient(135deg, #bc8cff 0%, #9162d8 100%);
   --gradient-success: linear-gradient(135deg, #3fb950 0%, #2ea043 100%);
+  --gradient-danger: linear-gradient(135deg, #f85149 0%, #da3633 100%);
 
   /* 玻璃态效果 */
   --glass-bg: rgba(22, 27, 34, 0.85);
@@ -1251,6 +1253,55 @@ a.neon-link:hover::after {
   }
 }
 
+/* ========== 小屏幕设备优化 (320px - 480px) ========== */
+@media (max-width: 480px) {
+  .avatar-container {
+    width: 150px;
+    height: 150px;
+  }
+
+  .hero-title {
+    font-size: var(--text-xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-base);
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .card {
+    padding: var(--spacing-lg);
+  }
+
+  .section-title {
+    font-size: var(--text-xl);
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+
+  .pagination-buttons {
+    justify-content: center;
+  }
+}
+
 /* ========== 加载动画 ========== */
 .loading {
   display: inline-block;
@@ -1339,4 +1390,72 @@ a.neon-link:hover::after {
   gap: var(--spacing-md);
   flex-wrap: wrap;
   justify-content: center;
+}
+
+/* ========== 分页导航 ========== */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+}
+
+.pagination-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.pagination-pages {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+/* ==========  prefers-reduced-motion 支持 ========== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .fade-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-grid {
+    animation: none;
+  }
+
+  .hero-particle {
+    animation: none;
+  }
+
+  .avatar-ring {
+    animation: none;
+  }
+
+  .avatar {
+    animation: none;
+  }
+}
+
+/* ========== 焦点指示器（可访问性） ========== */
+:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 3px;
 }

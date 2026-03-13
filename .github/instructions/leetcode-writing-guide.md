@@ -1,5 +1,5 @@
 ---
-applyTo: "content/leetcode/**/*.md"
+applyTo: "content/notes/code/**/*.md"
 ---
 
 # LeetCode 算法笔记写作规范 v2.0

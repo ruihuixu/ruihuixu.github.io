@@ -1,0 +1,34 @@
+{{/*
+  Card Partial - Reusable card component
+  Usage: {{ partial "card.html" (dict "page" . "context" $) }}
+
+  Parameters:
+    - page: The page object (.Page or .)
+    - context: The current context for accessing site data
+    - type: Optional card type override
+*/}}
+{{ $page := .page }}
+{{ $context := .context | default $ }}
+{{ $section := $page.Section }}
+
+<article class="card fade-in" data-url="{{ $page.RelPermalink }}">
+  <span class="card-icon" aria-hidden="true">
+    {{ partial "section-icon.html" (dict "Section" $section) }}
+  </span>
+  <h3 class="card-title">
+    <a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
+  </h3>
+  <div class="card-meta">
+    <span>{{ $page.Date.Format "2006-01-02" }}</span>
+    {{ if eq $section "notes/code" }}
+      <span class="tag" data-no-click>算法题解</span>
+    {{ else if eq $section "notes/tools" }}
+      <span class="tag" data-no-click>工具技术</span>
+    {{ else if eq $section "notes/recommendation" }}
+      <span class="tag" data-no-click>推荐算法</span>
+    {{ end }}
+  </div>
+  <p class="card-description">
+    {{ $page.Summary | truncate 100 }}
+  </p>
+</article>

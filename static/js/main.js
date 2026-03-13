@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 初始化卡片点击
   initCardClick();
+
+  // 初始化图片懒加载
+  initLazyLoading();
 });
 
 /**
@@ -80,26 +83,38 @@ function initSmoothScroll() {
 }
 
 /**
- * 移动端菜单
+ * 移动端菜单 - 统一在 header.html 中处理，这里只保留对外关闭逻辑
  */
 function initMobileMenu() {
   const menuToggle = document.getElementById('menuToggle');
-  const headerNav = document.getElementById('headerNav');
+  const headerNavLeft = document.querySelector('.header-nav-left');
+  const headerNavRight = document.querySelector('.header-nav-right');
 
-  if (menuToggle && headerNav) {
-    menuToggle.addEventListener('click', () => {
-      menuToggle.classList.toggle('active');
-      headerNav.classList.toggle('active');
-    });
+  if (!menuToggle) return;
 
-    // 点击导航外部关闭菜单
-    document.addEventListener('click', (e) => {
-      if (!menuToggle.contains(e.target) && !headerNav.contains(e.target)) {
+  // 菜单切换逻辑
+  menuToggle.addEventListener('click', () => {
+    const isActive = menuToggle.classList.toggle('active');
+    if (headerNavLeft) headerNavLeft.classList.toggle('active');
+    if (headerNavRight) headerNavRight.classList.toggle('active');
+    // 同步 ARIA 状态
+    menuToggle.setAttribute('aria-expanded', isActive);
+  });
+
+  // 点击导航外部关闭菜单
+  document.addEventListener('click', (e) => {
+    if (menuToggle && headerNavLeft && headerNavRight) {
+      if (!menuToggle.contains(e.target) && !headerNavLeft.contains(e.target) && !headerNavRight.contains(e.target)) {
         menuToggle.classList.remove('active');
-        headerNav.classList.remove('active');
+        headerNavLeft.classList.remove('active');
+        headerNavRight.classList.remove('active');
+        // 同步 ARIA 状态
+        menuToggle.setAttribute('aria-expanded', 'false');
+        const dropdowns = document.querySelectorAll('.dropdown-toggle');
+        dropdowns.forEach(d => d.setAttribute('aria-expanded', 'false'));
       }
-    });
-  }
+    }
+  });
 }
 
 /**

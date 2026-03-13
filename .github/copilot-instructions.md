@@ -47,8 +47,8 @@
 
 ### Tech Stack
 - **Hugo** 静态站点，配置在 `hugo.toml`
-- **Theme**: Ananke，以 git submodule 形式在 `themes/ananke`（见 `.gitmodules`）
-- **Deployment**: GitHub Actions (`.github/workflows/hugo.yaml`)  GitHub Pages
+- **Theme**: 自定义暗色科技风（基于 Ananke 主题覆盖）
+- **Deployment**: GitHub Actions (`.github/workflows/hugo.yaml`) → GitHub Pages
 
 ### Local Workflows (Windows-friendly)
 ```bash
@@ -82,20 +82,20 @@ git submodule update --init --recursive
 ##  Content Conventions（内容约定）
 
 ### 目录结构
-- **Section 列表页**：用 `_index.md`（如 `content/leetcode/_index.md`）
-- **文章**：Section 下的 markdown 文件（如 `content/leetcode/704-binary-search.md`）
+- **Section 列表页**：用 `_index.md`（如 `content/notes/code/_index.md`）
+- **文章**：Section 下的 markdown 文件（如 `content/notes/code/二分查找.md`）
 - **Front matter**：统一用 YAML 格式 (`--- ... ---`)
   - 注：`archetypes/default.md` 是 TOML `+++`，但跟随现有内容风格用 YAML
 
 ### Taxonomy 字段（保持一致）
 - `tags`: 多行 YAML 列表
-- `categories`: 多行 YAML 列表  
+- `categories`: 多行 YAML 列表
 - `description`: 60-160 字符，SEO 友好
 - `draft`: Boolean
 - `date`: ISO 8601 格式
 
 ### Section 特殊规则
-- `content/leetcode/_index.md` 使用 `cascade.tags` 给该 section 下所有页面加默认标签，改动时要保留这个机制
+- `content/notes/code/_index.md` 使用 `cascade.tags` 给该 section 下所有页面加默认标签，改动时要保留这个机制
 
 ---
 
@@ -106,10 +106,10 @@ git submodule update --init --recursive
 | 用途 | 文件位置 | 数据来源 |
 |------|---------|---------|
 | 主页 | `layouts/index.html` | `data/profile.yaml`（侧边栏）、`static/images/`（头像） |
-| 导航 | `layouts/partials/site-header.html` | `hugo.toml` 的 `.Site.Menus.main` |
-| 样式 | `static/css/custom.css` | `hugo.toml` 的 `params.custom_css` 加载 |
+| 导航 | `layouts/partials/header.html` | `hugo.toml` 的 `.Site.Menus.main` |
+| 样式 | `static/css/main.css` / `static/css/article.css` | 直接在模板中引用 |
 
-模板语言：Hugo Go templates + Ananke/Tachyons 风格，改动要小且一致。
+模板语言：Hugo Go templates + 自定义暗色科技风（CSS 变量 + 玻璃态 + 霓虹渐变）。
 
 ---
 
@@ -126,7 +126,7 @@ git submodule update --init --recursive
 
 | 路径 | 规范文件 | 优先级 |
 |------|---------|--------|
-| `content/leetcode/**/*.md` | `.github/instructions/leetcode-writing-guide.md` | 高于全局指令 |
+| `content/notes/code/**/*.md` | `.github/instructions/leetcode-writing-guide.md` | 高于全局指令 |
 
 当 scoped 指令与全局指令冲突时，**以更具体的 scoped 为准**。
 

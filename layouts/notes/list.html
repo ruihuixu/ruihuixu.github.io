@@ -12,31 +12,7 @@
       {{ $allNotes := where .Site.RegularPages "Section" "notes" }}
       {{ $sortedNotes := $allNotes.ByDate.Reverse }}
       {{ range $sortedNotes }}
-        <article class="card fade-in" data-url="{{ .RelPermalink }}">
-          <span class="card-icon">
-            {{ if eq .Section "notes/code" }}💻
-            {{ else if eq .Section "notes/tools" }}🛠️
-            {{ else if eq .Section "notes/recommendation" }}🎯
-            {{ else }}📝
-            {{ end }}
-          </span>
-          <h3 class="card-title">
-            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-          </h3>
-          <div class="card-meta">
-            <span>{{ .Date.Format "2006-01-02" }}</span>
-            {{ if eq .Section "notes/code" }}
-              <span class="tag" data-no-click>算法题解</span>
-            {{ else if eq .Section "notes/tools" }}
-              <span class="tag" data-no-click>工具技术</span>
-            {{ else if eq .Section "notes/recommendation" }}
-              <span class="tag" data-no-click>推荐算法</span>
-            {{ end }}
-          </div>
-          <p class="card-description">
-            {{ .Summary | truncate 100 }}
-          </p>
-        </article>
+        {{ partial "card.html" (dict "page" . "context" $) }}
       {{ end }}
     </div>
   </section>
