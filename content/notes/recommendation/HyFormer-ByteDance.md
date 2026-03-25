@@ -1,7 +1,7 @@
 ---
 title: "HyFormer: 字节统一混合 Transformer 架构"
 date: 2026-03-24
-published: 2025-01-01
+published: 2025-09-01
 tags:
   - "Discriminative Recommendation"
   - "Transformer"

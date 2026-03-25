@@ -1,7 +1,7 @@
 ---
 title: "MTGR: Industrial-Scale Generative Recommendation (Meituan)"
 date: 2026-03-24
-published: 2025-05-01
+published: 2025-05-23
 tags:
   - "Generative Recommendation"
   - "HSTU"

@@ -1,7 +1,7 @@
 ---
 title: "OneTrans: 字节统一 Transformer 推荐架构"
 date: 2026-03-25
-published: 2025-10-01
+published: 2025-10-29
 tags:
   - "Discriminative Recommendation"
   - "Transformer"

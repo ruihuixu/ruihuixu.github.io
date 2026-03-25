@@ -1,7 +1,7 @@
 ---
 title: "RankMixer: 字节硬件感知精排架构"
 date: 2026-03-24
-published: 2024-01-01
+published: 2025-07-21
 tags:
   - "Discriminative Recommendation"
   - "Token Mixer"
