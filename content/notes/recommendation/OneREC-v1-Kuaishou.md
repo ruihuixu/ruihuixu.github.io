@@ -1,6 +1,7 @@
 ---
 title: "OneREC v1: Unifying Retrieve and Rank with Generative Recommender (Kuaishou)"
 date: 2026-03-24
+published: 2025-02-01
 tags:
   - "Generative Recommendation"
   - "Encoder-Decoder"

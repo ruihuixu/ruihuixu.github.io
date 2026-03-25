@@ -1,6 +1,7 @@
 ---
 title: "TokenMixer-Large: 字节 15B 参数大规模推荐架构"
 date: 2026-03-24
+published: 2025-01-01
 tags:
   - "Discriminative Recommendation"
   - "Token Mixer"

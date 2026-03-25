@@ -1,6 +1,8 @@
 ---
 title: "GRs: Actions Speak Louder than Words (Meta)"
 date: 2026-03-24
+published: 2024-03-01
+venue: ICML 2024
 tags:
   - "Generative Recommendation"
   - "HSTU"
