@@ -4,11 +4,7 @@ date: 2026-03-09T10:00:00+08:00
 draft: false
 slug: "dp-subsequences"
 tags:
-  - "Algorithm"
-  - "Dynamic Programming"
-  - "Array"
-  - "String"
-  - "Python"
+  - "动态规划"
 categories:
   - "LeetCode"
 description: "涵盖 LeetCode 300/674/718/1143/1035/392/115/583/72。子序列DP分三型：单序列（300/674/718）、双序列公共（1143/1035）、双序列编辑（392/115/583/72）——状态定义决定转移方向，末尾字符相等时的处理是核心。"

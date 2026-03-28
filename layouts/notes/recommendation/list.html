@@ -7,44 +7,156 @@
       {{ end }}
     </div>
 
-    <div class="article-list">
+    <!-- 主题分类标签 -->
+    <div class="topic-tabs-container" style="margin-bottom: var(--spacing-2xl);">
+      <div class="topic-tabs">
+        <button class="topic-tab active" data-tab="all">全部</button>
+        {{/* 推荐系统主题列表 - 4 分类 */}}
+        {{ $topics := slice
+          "生成式推荐" "判别式推荐" "端到端" "精排"
+        }}
+        {{ range $topics }}
+          <button class="topic-tab" data-tab="{{ . }}">{{ . }}</button>
+        {{ end }}
+      </div>
+    </div>
+
+    <div class="card-grid" id="articles-container">
       {{ range .Pages }}
-        <article class="article-card-large fade-in" data-url="{{ .RelPermalink }}">
-          <h2 class="article-card-large-title">
-            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-          </h2>
-          <div class="article-card-large-meta">
-            <time>{{ .Date.Format "2006-01-02" }}</time>
-            {{ if .Params.tags }}
-              <span>·</span>
-              <span>
-                {{ range $i, $tag := .Params.tags }}
-                  {{ if $i }}, {{ end }}
-                  <a href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}/" class="tag" data-no-click>{{ $tag }}</a>
-                {{ end }}
-              </span>
+        {{ $firstTag := index .Params.tags 0 }}
+        <article class="card fade-in" data-tags="{{ range .Params.tags }}{{ . }} {{ end }}">
+          <span class="card-icon">
+            {{ $icon := "📌" }}
+            {{ if eq $firstTag "生成式推荐" }}{{ $icon = "🤖" }}
+            {{ else if eq $firstTag "判别式推荐" }}{{ $icon = "🎯" }}
+            {{ else if eq $firstTag "端到端" }}{{ $icon = "🔄" }}
+            {{ else if eq $firstTag "精排" }}{{ $icon = "⭐" }}
             {{ end }}
+            {{ $icon }}
+          </span>
+          <div class="card-content">
+            <h3 class="card-title">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h3>
+            <div class="card-meta">
+              <time>{{ .Date.Format "2006-01-02" }}</time>
+              {{ range .Params.tags }}
+                <span class="tag-small">{{ . }}</span>
+              {{ end }}
+            </div>
+            <p class="card-description">
+              {{ .Summary | truncate 80 }}
+            </p>
           </div>
-          <p class="article-card-large-summary">
-            {{ .Summary | truncate 150 }}
-          </p>
+          <a href="{{ .RelPermalink }}" class="card-link"></a>
         </article>
       {{ end }}
     </div>
 
-    <!-- 分页导航 -->
-    {{ if or .Paginator.HasPrev .Paginator.HasNext }}
-      <div class="pagination" style="display: flex; justify-content: center; gap: var(--spacing-sm); margin-top: var(--spacing-2xl);">
-        {{ if .Paginator.HasPrev }}
-          <a href="{{ .Paginator.Prev.URL }}" class="btn btn-secondary">← 上一页</a>
-        {{ end }}
-        <span class="pagination-pages" style="color: var(--text-secondary); padding: var(--spacing-md);">
-          第 {{ .Paginator.PageNumber }} 页 / 共 {{ .Paginator.TotalPages }} 页
-        </span>
-        {{ if .Paginator.HasNext }}
-          <a href="{{ .Paginator.Next.URL }}" class="btn btn-secondary">下一页 →</a>
-        {{ end }}
-      </div>
-    {{ end }}
+    <style>
+      .topic-tabs-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .topic-tabs {
+        display: flex;
+        gap: var(--spacing-sm);
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: var(--spacing-sm);
+        background: var(--bg-secondary);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-primary);
+      }
+      .topic-tab {
+        padding: var(--spacing-sm) var(--spacing-md);
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-primary);
+        border-radius: var(--radius-md);
+        color: var(--text-secondary);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all var(--transition-base);
+        white-space: nowrap;
+      }
+      .topic-tab:hover {
+        background: var(--bg-elevated);
+        border-color: var(--accent-cyan);
+        color: var(--text-primary);
+      }
+      .topic-tab.active {
+        background: var(--gradient-primary);
+        border-color: transparent;
+        color: white;
+      }
+      .tag-small {
+        display: inline-block;
+        padding: 2px 6px;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-primary);
+        border-radius: 4px;
+        font-size: 11px;
+        color: var(--accent-cyan);
+      }
+      .card-content {
+        flex: 1;
+      }
+      .card-link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+      }
+      .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+      }
+      .card-description {
+        color: var(--text-secondary);
+        font-size: var(--text-sm);
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-top: var(--spacing-sm);
+      }
+    </style>
+
+    <script>
+      (function() {
+        const tabs = document.querySelectorAll('.topic-tab');
+        const articles = document.querySelectorAll('#articles-container .card');
+
+        tabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+            const selectedTab = this.dataset.tab;
+
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            articles.forEach(article => {
+              const articleTags = article.dataset.tags.split(' ');
+
+              if (selectedTab === 'all') {
+                article.style.display = 'flex';
+                article.classList.add('fade-in');
+              } else if (articleTags.includes(selectedTab)) {
+                article.style.display = 'flex';
+                article.classList.add('fade-in');
+              } else {
+                article.style.display = 'none';
+                article.classList.remove('fade-in');
+              }
+            });
+          });
+        });
+      })();
+    </script>
   </section>
 {{ end }}

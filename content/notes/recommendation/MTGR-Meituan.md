@@ -3,9 +3,7 @@ title: "MTGR: Industrial-Scale Generative Recommendation (Meituan)"
 date: 2026-03-24
 published: 2025-05-23
 tags:
-  - "Generative Recommendation"
-  - "HSTU"
-  - "Scaling Law"
+  - "生成式推荐"
 description: "美团工业级生成式推荐框架，融合交叉特征与生成式推荐优势"
 ---
 

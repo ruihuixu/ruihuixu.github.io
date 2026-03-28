@@ -662,13 +662,24 @@ a.neon-link:hover::after {
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
 }
 
 /* 卡片内的可点击元素 - 阻止事件冒泡 */
 .card .card-meta span,
 .card .tag,
+.card .tag-small,
 .card .card-title a {
   pointer-events: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* 整卡点击覆盖层 - 位于最底层 */
+.card .card-link {
+  z-index: 1;
 }
 
 .card::before {
@@ -731,6 +742,20 @@ a.neon-link:hover::after {
   color: var(--text-secondary);
   line-height: 1.7;
   margin-bottom: var(--spacing-md);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 整卡点击覆盖层 */
+.card-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
 }
 
 .card-tags {

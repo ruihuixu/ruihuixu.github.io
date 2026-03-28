@@ -3,9 +3,8 @@ title: "TokenMixer-Large: 字节 15B 参数大规模推荐架构"
 date: 2026-03-24
 published: 2026-02-06
 tags:
-  - "Discriminative Recommendation"
-  - "Token Mixer"
-  - "MoE"
+  - "判别式推荐"
+  - "精排"
 description: "字节跳动 15B 参数大规模推荐架构，RankMixer 的系统性演进版本"
 ---
 

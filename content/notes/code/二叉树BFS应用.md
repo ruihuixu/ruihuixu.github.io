@@ -4,10 +4,7 @@ date: 2026-03-09T10:00:00+08:00
 draft: false
 slug: "binary-tree-bfs"
 tags:
-  - "Algorithm"
-  - "BFS"
-  - "Tree"
-  - "Python"
+  - "搜索遍历"
 categories:
   - "LeetCode"
 description: "涵盖 LeetCode 107/637/429/515/116/117/104/111。层序遍历统一框架：deque+按层处理适配八道题，区别只在每层处理逻辑（逆序/均值/N叉/最大/填充指针/最小深度等）。"

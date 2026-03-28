@@ -3,9 +3,7 @@ title: "OneTrans: 字节统一 Transformer 推荐架构"
 date: 2026-03-25
 published: 2025-10-29
 tags:
-  - "Discriminative Recommendation"
-  - "Transformer"
-  - "Unified Architecture"
+  - "判别式推荐"
 description: "字节跳动统一 Transformer 架构，用一个 Transformer 统一序列建模与特征交互"
 ---
 

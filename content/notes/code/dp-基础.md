@@ -4,10 +4,7 @@ date: 2026-03-09T10:00:00+08:00
 draft: false
 slug: "dp-basics"
 tags:
-  - "Algorithm"
-  - "Dynamic Programming"
-  - "Array"
-  - "Python"
+  - "动态规划"
 categories:
   - "LeetCode"
 description: "涵盖 LeetCode 509/70/746/62/63/343/96。DP 五部曲（定义dp/递推公式/初始化/遍历顺序/打印验证）是所有动态规划题的分析框架，七道入门题覆盖线性DP、路径DP、整数拆分，建立解题思维。"

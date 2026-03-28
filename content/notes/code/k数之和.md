@@ -4,11 +4,7 @@ date: 2026-03-09T10:00:00+08:00
 draft: false
 slug: "k-sum"
 tags:
-  - "Algorithm"
-  - "Two Pointers"
-  - "Array"
-  - "Hash Table"
-  - "Python"
+  - "双指针"
 categories:
   - "LeetCode"
 description: "涵盖 LeetCode 15/18。排序+对撞指针是三/四数之和的核心：两数之和用哈希，三数之和排序+双指针，四数之和再套一层枚举，去重逻辑是变体题的关键难点。"

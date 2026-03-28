@@ -3,9 +3,7 @@ title: "HyFormer: 字节统一混合 Transformer 架构"
 date: 2026-03-24
 published: 2025-09-01
 tags:
-  - "Discriminative Recommendation"
-  - "Transformer"
-  - "Long Sequence"
+  - "判别式推荐"
 description: "字节跳动统一混合 Transformer 架构，Query Decoding+Boosting 交替优化"
 ---
 

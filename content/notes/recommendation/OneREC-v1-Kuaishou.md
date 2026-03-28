@@ -3,9 +3,8 @@ title: "OneREC v1: Unifying Retrieve and Rank with Generative Recommender (Kuais
 date: 2026-03-24
 published: 2025-02-25
 tags:
-  - "Generative Recommendation"
-  - "Encoder-Decoder"
-  - "End-to-End"
+  - "生成式推荐"
+  - "端到端"
 description: "快手端到端生成式推荐模型，统一召回与精排，引入 DPO 偏好对齐"
 ---
 

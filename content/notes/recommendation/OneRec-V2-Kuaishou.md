@@ -3,9 +3,8 @@ title: "OneRec-V2: 快手 Lazy Decoder-Only 生成式推荐架构"
 date: 2026-03-24
 published: 2025-08-28
 tags:
-  - "Generative Recommendation"
-  - "Decoder-Only"
-  - "Preference Alignment"
+  - "生成式推荐"
+  - "精排"
 description: "快手 Lazy Decoder-Only 架构，计算量减少 94%，基于真实用户反馈的偏好对齐"
 ---
 

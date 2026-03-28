@@ -4,11 +4,7 @@ date: 2026-03-09T10:00:00+08:00
 draft: false
 slug: "dp-house-robber"
 tags:
-  - "Algorithm"
-  - "Dynamic Programming"
-  - "Array"
-  - "Tree"
-  - "Python"
+  - "动态规划"
 categories:
   - "LeetCode"
 description: "涵盖 LeetCode 198/213/337。打家劫舍核心是「不能连续偷相邻房间」的状态转移：线性版直接DP，环形版拆分两次线性，树形版后序DFS返回偷/不偷两种状态——三题共享同一转移公式。"

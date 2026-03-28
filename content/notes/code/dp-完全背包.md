@@ -4,11 +4,7 @@ date: 2026-03-09T10:00:00+08:00
 draft: false
 slug: "dp-knapsack-complete"
 tags:
-  - "Algorithm"
-  - "Dynamic Programming"
-  - "Knapsack"
-  - "Array"
-  - "Python"
+  - "动态规划"
 categories:
   - "LeetCode"
 description: "涵盖 LeetCode 518/377/322/279/139。完全背包与01背包的唯一区别是内层遍历改为正序，物品可重复选取；求组合数外层物品内层容量，求排列数外层容量内层物品——两句话区分五道题。"

@@ -2,7 +2,8 @@
 title: "Python 列表推导式技巧"
 date: 2025-12-15T20:00:00+08:00
 draft: false
-tags: ["Python", "Efficiency"]
+tags:
+  - "Python"
 ---
 
 这是我的第一篇代码笔记。列表推导式（List Comprehension）是 Python 中非常优雅的语法。

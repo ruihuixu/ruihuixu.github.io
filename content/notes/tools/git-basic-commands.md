@@ -2,7 +2,8 @@
 title: "常用 Git 命令备忘"
 date: 2025-12-14T10:00:00+08:00
 draft: false
-tags: ["Git", "DevOps"]
+tags:
+  - "Git"
 ---
 
 记录一些容易忘记的 Git 命令，防止下次再查文档。

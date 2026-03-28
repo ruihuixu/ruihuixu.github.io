@@ -7,6 +7,10 @@ title = 'Ruihui Xu' # 网站标题
 [pagination]
   pagerSize = 10
 
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
 [params]
   description = "Backend Developer & AI Enthusiast | Focusing on LLM, Search & RecSys"
   mainSections = ["notes", "misc", "projects"]

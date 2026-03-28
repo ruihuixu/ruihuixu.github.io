@@ -4,9 +4,7 @@ date: 2026-03-24
 published: 2024-03-28
 venue: ICML 2024
 tags:
-  - "Generative Recommendation"
-  - "HSTU"
-  - "Scaling Law"
+  - "生成式推荐"
 description: "Meta 万亿参数序列转导生成式推荐模型"
 ---
 

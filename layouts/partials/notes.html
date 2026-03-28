@@ -9,36 +9,60 @@
     {{/* 获取所有技术笔记 */}}
     {{ $allNotes := where .Site.RegularPages "Section" "notes" }}
     {{ range first 6 $allNotes }}
+      {{ $firstTag := "" }}
+      {{ if .Params.tags }}
+        {{ $firstTag = index .Params.tags 0 }}
+      {{ end }}
       <article class="card fade-in">
         <span class="card-icon">
-          {{ if eq .Section "notes/code" }}💻
-          {{ else if eq .Section "notes/tools" }}🛠️
-          {{ else if eq .Section "notes/recommendation" }}🎯
+          {{ if eq .Section "notes/code" }}
+            {{/* 算法题解 - 根据第一个标签显示图标 */}}
+            {{ $icon := "📌" }}
+            {{ if eq $firstTag "动态规划" }}{{ $icon = "🧩" }}
+            {{ else if eq $firstTag "搜索遍历" }}{{ $icon = "🔍" }}
+            {{ else if eq $firstTag "双指针" }}{{ $icon = "👆" }}
+            {{ else if eq $firstTag "贪心" }}{{ $icon = "🎯" }}
+            {{ else if eq $firstTag "回溯" }}{{ $icon = "🔄" }}
+            {{ else if eq $firstTag "树" }}{{ $icon = "🌳" }}
+            {{ else if eq $firstTag "链表" }}{{ $icon = "🔗" }}
+            {{ else if eq $firstTag "字符串" }}{{ $icon = "📝" }}
+            {{ else if eq $firstTag "栈哈希" }}{{ $icon = "🗂️" }}
+            {{ else if eq $firstTag "数组二分" }}{{ $icon = "📋" }}
+            {{ end }}
+            {{ $icon }}
+          {{ else if eq .Section "notes/tools" }}
+            {{ if eq $firstTag "Git" }}📦{{ else }}🐍{{ end }}
+          {{ else if eq .Section "notes/recommendation" }}
+            {{ if eq $firstTag "生成式推荐" }}🤖
+            {{ else if eq $firstTag "判别式推荐" }}🎯
+            {{ else if eq $firstTag "端到端" }}🔄
+            {{ else }}⭐{{ end }}
           {{ else }}📝
           {{ end }}
         </span>
-        <h3 class="card-title">
-          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-        </h3>
-        <div class="card-meta">
-          <span>{{ .Date.Format "2006-01-02" }}</span>
-          {{ if eq .Section "notes/code" }}
-            <span class="tag">算法题解</span>
-          {{ else if eq .Section "notes/tools" }}
-            <span class="tag">工具技术</span>
-          {{ else if eq .Section "notes/recommendation" }}
-            <span class="tag">推荐算法</span>
-          {{ end }}
+        <div class="card-content">
+          <h3 class="card-title">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h3>
+          <div class="card-meta">
+            <time>{{ .Date.Format "2006-01-02" }}</time>
+            {{ if eq .Section "notes/code" }}
+              {{ range .Params.tags }}
+                <span class="tag-small">{{ . }}</span>
+              {{ end }}
+            {{ else if eq .Section "notes/tools" }}
+              <span class="tag-small">{{ .Params.tags | index 0 }}</span>
+            {{ else if eq .Section "notes/recommendation" }}
+              {{ range .Params.tags }}
+                <span class="tag-small">{{ . }}</span>
+              {{ end }}
+            {{ end }}
+          </div>
+          <p class="card-description">
+            {{ .Summary | truncate 80 }}
+          </p>
         </div>
-        <p class="card-description">
-          {{ .Summary | truncate 100 }}
-        </p>
-        <a href="{{ .RelPermalink }}" class="notes-more">
-          阅读全文
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
+        <a href="{{ .RelPermalink }}" class="card-link"></a>
       </article>
     {{ end }}
   </div>

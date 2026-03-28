@@ -4,10 +4,7 @@ date: 2026-03-09T10:00:00+08:00
 draft: false
 slug: "dp-palindromes"
 tags:
-  - "Algorithm"
-  - "Dynamic Programming"
-  - "String"
-  - "Python"
+  - "动态规划"
 categories:
   - "LeetCode"
 description: "涵盖 LeetCode 647/516。647 统计回文子串用区间 DP，dp[i][j] 标记 s[i..j] 是否为回文；516 求最长回文子序列同样区间 DP，状态从短区间向长区间扩展，两题共享「对角线填充」的遍历顺序。"

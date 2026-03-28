@@ -4,11 +4,7 @@ date: 2026-03-09T10:00:00+08:00
 draft: false
 slug: "dp-stocks"
 tags:
-  - "Algorithm"
-  - "Dynamic Programming"
-  - "State Machine"
-  - "Array"
-  - "Python"
+  - "动态规划"
 categories:
   - "LeetCode"
 description: "涵盖 LeetCode 121/122/123/188/309/714。持有/不持有两种状态的转移是六题统一框架：121买入固定为负价，122带前利润，123/188扩展状态维度，309细分不持有状态，714卖出减手续费。"

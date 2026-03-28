@@ -4,10 +4,7 @@ date: 2026-03-09T10:00:00+08:00
 draft: false
 slug: "kmp-string"
 tags:
-  - "Algorithm"
-  - "String"
-  - "KMP"
-  - "Python"
+  - "字符串"
 categories:
   - "LeetCode"
 description: "涵盖 LeetCode 28/459。KMP 核心是主串指针永不回退，靠前缀表（next 数组）实现：28 建立标准匹配模板，459 利用 next[len-1] 推导字符串周期，同一套前缀表解决两类问题。"
