@@ -12,7 +12,7 @@ title = 'Ruihui Xu' # 网站标题
   category = "categories"
 
 [params]
-  description = "Backend Developer & AI Enthusiast | Focusing on LLM, Search & RecSys"
+  description = ""
   mainSections = ["notes", "misc", "projects"]
 
 [menu]

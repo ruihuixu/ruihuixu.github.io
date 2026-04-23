@@ -1,7 +1,7 @@
 # 这里的配置将控制首页左侧栏的显示
 name: "Ruihui Xu"
 avatar: "/images/me.png" # 头像图片路径，放在 static 文件夹下
-bio: "Backend Developer & AI Enthusiast"
+bio: "AI Researcher | Focusing on MultiModal & RecSys"
 
 # 个人信息 (图标可以是 emoji，也可以是 HTML 代码)
 info:
@@ -16,29 +16,24 @@ info:
 
 # 技能栈标签
 skills:
-  - "Java"
   - "Python"
-  - "LLM/RAG"
-  - "Docker"
-  - "Spring"
-  - "PyTorch"
+  - "Deep Learning"
+  - "Recommender Systems"
 
 # 教育经历
 education:
-  - school: "哈尔滨工业大学 (HIT)"
+  - school: "哈尔滨工业大学(深圳)  HITSZ"
     degree: "计算机科学与技术 (硕士)"
-    period: "2023 - 2026 (预计)"
-  - school: "本科院校"
+    period: "2024 - 2027 (预计)"
+  - school: "哈尔滨工业大学(深圳) HITSZ"
     degree: "计算机科学与技术 (学士)"
-    period: "2019 - 2023"
+    period: "2020 - 2024"
 
 # 核心成就
 achievements:
-  - title: '"圳智青春" AI Agent Challenge'
-    description: "决赛 Top 10%"
-    date: "2025.10"
-  - title: "英语六级 (CET-6)"
-    date: "2024.12"
-  - title: "学术论文"
-    description: "投稿于 ICME (In Review)"
-    date: "2024.09"
+  - title: "CERTrack: Exploiting Complementary Event Representations for RGBE Tracking"
+    description: "IEEE International Conference on Multimedia and Expo (ICME) 2026 | 第一作者"
+    date: "2026.07"
+  - title: "Memory-Augmented Dynamic Graph Attention for Event-Driven 3D Human Pose Estimation"
+    description: "IEEE International Conference on Multimedia and Expo (ICME) 2026 | 第三作者"
+    date: "2026.07"
