@@ -28,7 +28,7 @@ No submodule setup needed — the theme is entirely custom.
 
 ## Architecture
 
-- **`hugo.toml`** — site config (baseURL `https://rayx750.github.io/`, menus, taxonomies, `mainSections = ["notes", "misc", "projects"]`)
+- **`hugo.toml`** — site config (baseURL `https://rayx750.github.io/`, menus, taxonomies, `mainSections = ["notes", "rl-tutorial", "misc", "projects"]`)
 - **`layouts/_default/baseof.html`** — root template: loads `main.css`, conditionally loads `article.css` on single pages, loads `main.js`, renders `header.html` + main block + `footer.html`
 - **`layouts/index.html`** — homepage assembles partials: `hero.html` → `projects.html` → `notes.html` → `misc.html`
 - **`layouts/_default/single.html`** — article page template
@@ -47,11 +47,13 @@ No submodule setup needed — the theme is entirely custom.
 | Code notes | `content/notes/code/` | Algorithm/LeetCode notes (Chinese filenames, English slugs) |
 | RecSys notes | `content/notes/recommendation/` | Recommendation system paper notes |
 | Tools notes | `content/notes/tools/` | Dev tool references |
+| Fundamentals | `content/notes/fundamentals/` | DL/ML interview fundamentals (optimizers, activation functions, etc.) |
+| RL Tutorial | `content/rl-tutorial/` | 6-chapter RL tutorial series (PG→PPO→GRPO→RLHF→RecSys) |
 | Misc | `content/misc/` | Reading notes, etc. |
 | Projects | `content/projects/` | Project showcase |
 | Profile | `content/profile/` | About me page |
 
-All front matter uses YAML format (`---`). Key fields: `title`, `date`, `draft`, `slug`, `tags`, `categories`, `description`.
+All front matter uses YAML format (`---`). Key fields: `title`, `date`, `draft`, `slug`, `tags`, `categories`, `description`. Pages with LaTeX math must set `math: true` in front matter to load KaTeX.
 
 `content/notes/code/_index.md` uses `cascade.tags` to apply default tags to all pages in that section.
 
@@ -68,3 +70,14 @@ All front matter uses YAML format (`---`). Key fields: `title`, `date`, `draft`,
 
 - `public/` — Hugo generated output
 - `resources/_gen/` — Hugo resource cache
+
+## Cleanup After Sessions
+
+Always remove temporary files before completing work:
+
+- Screenshots: `*.png` in project root
+- Test outputs: `output/` directory
+- Browser artifacts: `.playwright-mcp/` directory
+- Dev scripts: one-off `_*.py` files in `rl-tutorial/` (keep `_convert.py` and `_symbols.md`)
+
+Never commit `.claude/settings.local.json` (contains API keys). Never commit `output/` or `.playwright-mcp/`.
