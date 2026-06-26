@@ -21,8 +21,8 @@
 
   /* 文字色 */
   --text-primary: #f0f6fc;
-  --text-secondary: #8b949e;
-  --text-muted: #484f58;
+  --text-secondary: #a0a8b2;
+  --text-muted: #6e7681;
 
   /* 边框 */
   --border-primary: #30363d;
@@ -55,7 +55,7 @@
   --radius-xl: 24px;
 
   /* 字体 */
-  --font-sans: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  --font-sans: "Inter", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-mono: "Fira Code", "Cascadia Code", "Source Code Pro", Consolas, monospace;
 
   /* 字号 */
@@ -94,6 +94,8 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -105,11 +107,19 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 main {
   flex: 1;
+}
+
+#main-content {
+  scroll-margin-top: 80px;
 }
 
 /* ========== 链接样式 ========== */
@@ -646,6 +656,19 @@ a.neon-link:hover::after {
   margin: 0 auto;
 }
 
+/* Section 分隔线 */
+#projects, #notes, #misc {
+  border-top: 1px solid var(--bg-elevated);
+  padding-top: var(--spacing-2xl);
+  margin-top: var(--spacing-xl);
+}
+
+/* 触控优化 */
+.card, .header-nav-link, .btn, .back-to-top, .tag,
+.dropdown-toggle, .dropdown-item, .footer-social-link {
+  touch-action: manipulation;
+}
+
 /* ========== 卡片网格布局 ========== */
 .card-grid {
   display: grid;
@@ -655,11 +678,11 @@ a.neon-link:hover::after {
 
 /* ========== 通用卡片样式 ========== */
 .card {
-  background: var(--bg-secondary);
+  background: var(--bg-tertiary);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
-  transition: all var(--transition-base);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -767,17 +790,18 @@ a.neon-link:hover::after {
 .tag {
   display: inline-flex;
   align-items: center;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-primary);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
+  padding: 2px 10px;
+  background: rgba(88, 166, 255, 0.12);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 500;
   color: var(--accent-cyan);
-  transition: all var(--transition-base);
+  transition: background var(--transition-base);
 }
 
 .tag:hover {
-  background: var(--bg-elevated);
+  background: rgba(88, 166, 255, 0.25);
   border-color: var(--accent-cyan);
   text-decoration: none;
 }
@@ -1000,10 +1024,10 @@ a.neon-link:hover::after {
   letter-spacing: -0.02em;
 }
 
-.article-content h1 { font-size: var(--text-2xl); }
-.article-content h2 { font-size: var(--text-xl); }
-.article-content h3 { font-size: var(--text-lg); }
-.article-content h4 { font-size: var(--text-base); }
+.article-content h1 { font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 800; }
+.article-content h2 { font-size: clamp(1.5rem, 2.5vw, 1.75rem); font-weight: 700; }
+.article-content h3 { font-size: 1.375rem; font-weight: 600; }
+.article-content h4 { font-size: 1.125rem; font-weight: 600; }
 
 .article-content h1:first-child {
   margin-top: 0;
@@ -1470,6 +1494,48 @@ a.neon-link:hover::after {
   .avatar {
     animation: none;
   }
+
+  .card:hover, .article-card-large:hover,
+  .footer-social-link:hover, .back-to-top:hover,
+  .btn:hover {
+    transform: none;
+  }
+}
+
+/* ========== Skip Link (可访问性) ========== */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--spacing-md);
+  z-index: 10000;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--accent-cyan);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: var(--spacing-sm);
+}
+
+/* ========== 打印样式 ========== */
+@media print {
+  body { background: white; color: #000; }
+  .header, .back-to-top, .hero-grid, .hero-particle,
+  .avatar-ring, .footer, .article-progress { display: none !important; }
+  .card, .article-content, .article-nav-link {
+    background: white !important;
+    border-color: #ddd !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+  .article-content { padding: 1rem; font-size: 12pt; line-height: 1.5; }
+  .card-title a, .article-content a { color: #000 !important; text-decoration: underline; }
+  .card { transform: none !important; }
+  pre { white-space: pre-wrap; break-inside: avoid; }
+  .article-content .katex-display { break-inside: avoid; }
 }
 
 /* ========== 焦点指示器（可访问性） ========== */

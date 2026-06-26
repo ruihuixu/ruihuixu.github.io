@@ -26,9 +26,10 @@
   {{ end }}
 </head>
 <body>
+  <a href="#main-content" class="skip-link">跳过导航</a>
   {{ partial "header.html" . }}
 
-  <main>
+  <main id="main-content">
     {{ block "main" . }}{{ end }}
   </main>
 
