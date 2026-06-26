@@ -16,6 +16,9 @@
   {{ if eq .Kind "page" }}
     <link rel="stylesheet" href="/css/article.css">
   {{ end }}
+  {{ if or (eq .Section "rl-tutorial") .Params.math }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  {{ end }}
   {{ if .Params.custom_css }}
     {{ range .Params.custom_css }}
       <link rel="stylesheet" href="{{ . | relURL }}">
@@ -32,6 +35,23 @@
   {{ partial "footer.html" . }}
 
   <!-- Scripts -->
+  {{ if or (eq .Section "rl-tutorial") .Params.math }}
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false
+        });
+      });
+    </script>
+  {{ end }}
   <script src="/js/main.js" defer></script>
 
   {{ if .Params.custom_js }}

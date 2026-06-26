@@ -4,70 +4,67 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Hugo static blog deployed to GitHub Pages with custom dark tech theme.
+Hugo static blog with fully custom dark tech theme (no theme submodule). Deployed to GitHub Pages via `.github/workflows/hugo.yaml`. Hugo version: `0.152.2` extended.
 
 ## Commands
 
 ```bash
-# Local preview (with drafts)
-hugo server -D
-
-# Local preview (without drafts)
-hugo server
-
-# Production build
-hugo --minify
-
-# Initialize theme submodule (if missing)
-git submodule update --init --recursive
+hugo server -D          # local preview with drafts
+hugo server             # local preview (published only)
+hugo --minify           # production build
 ```
+
+## Vision / Image Reading
+
+When you need to visually understand an image (screenshot, diagram, chart, UI), use:
+
+```bash
+python3 scripts/read_image.py <path> [--mode ui|diagram|chart|code|text|photo|diff] [-p "custom prompt"] [--json]
+```
+
+See `.claude/skills/image-reader.md` for full usage guide. The main model has no vision; this tool bridges the gap via Qwen VL (DashScope). Key set to `DASHSCOPE_API_KEY` in `.claude/settings.local.json`.
+
+No submodule setup needed — the theme is entirely custom.
 
 ## Architecture
 
-- **Hugo** SSG with `hugo.toml` config
-- **Theme**: Ananke (git submodule at `themes/ananke`)
-- **Deployment**: GitHub Actions (`.github/workflows/hugo.yaml`) → GitHub Pages
-- **Base URL**: `https://rayx750.github.io/`
+- **`hugo.toml`** — site config (baseURL `https://rayx750.github.io/`, menus, taxonomies, `mainSections = ["notes", "misc", "projects"]`)
+- **`layouts/_default/baseof.html`** — root template: loads `main.css`, conditionally loads `article.css` on single pages, loads `main.js`, renders `header.html` + main block + `footer.html`
+- **`layouts/index.html`** — homepage assembles partials: `hero.html` → `projects.html` → `notes.html` → `misc.html`
+- **`layouts/_default/single.html`** — article page template
+- **`layouts/_default/list.html`** — default section list; section-specific overrides at `layouts/notes/code/list.html`, `layouts/notes/recommendation/list.html`, `layouts/notes/tools/list.html`, `layouts/misc/list.html`, `layouts/profile/list.html`, `layouts/projects/list.html`
+- **`layouts/taxonomy/`** — `term.html` and `terms.html` for tag/category pages
+- **`static/css/main.css`** — all base styles (1486 lines, custom dark tech theme)
+- **`static/css/article.css`** — article-specific typography and content styling
+- **`static/js/main.js`** — site-wide JS (nav, theme, interactions)
+- **`data/profile.yaml`** — personal profile data (name, avatar, bio, skills, education, achievements)
+- **`data/social.yaml`** — social links
 
-## Directory Structure
+## Content Structure
 
-| Path | Purpose |
-|------|---------|
-| `content/` | Markdown content (notes/code, notes/tools, notes/recommendation, projects, misc) |
-| `data/profile.yaml` | Profile config (name, avatar, bio, info, skills, education, achievements) |
-| `hugo.toml` | Site config, menus, params |
-| `layouts/` | Custom templates (index, partials, list, single) |
-| `static/` | Static assets (images, CSS, JS) |
-| `themes/ananke/` | Theme submodule (do not modify directly) |
+| Section | Path | Purpose |
+|---------|------|---------|
+| Code notes | `content/notes/code/` | Algorithm/LeetCode notes (Chinese filenames, English slugs) |
+| RecSys notes | `content/notes/recommendation/` | Recommendation system paper notes |
+| Tools notes | `content/notes/tools/` | Dev tool references |
+| Misc | `content/misc/` | Reading notes, etc. |
+| Projects | `content/projects/` | Project showcase |
+| Profile | `content/profile/` | About me page |
 
-## Content Conventions
+All front matter uses YAML format (`---`). Key fields: `title`, `date`, `draft`, `slug`, `tags`, `categories`, `description`.
 
-- **Section index**: `content/{section}/_index.md`
-- **Articles**: `content/{section}/{article}.md`
-- **Front matter**: YAML format (`--- ... ---`)
-- **Tags**: Use YAML list format
-- **Notes section**: `content/notes/code/_index.md` uses `cascade.tags` for default "Algorithm" tag
+`content/notes/code/_index.md` uses `cascade.tags` to apply default tags to all pages in that section.
 
-## Theme Overrides
+## Scoped Instructions
 
-Custom dark tech theme implemented in:
+`.github/instructions/leetcode-writing-guide.md` applies to `content/notes/code/**/*.md` — defines file naming, front matter standards, article structure (A+B paradigm), code/diagram conventions, and quality checklist. Takes precedence over global instructions for files in that path.
 
-| Purpose | File |
-|---------|------|
-| Homepage | `layouts/index.html` |
-| Header | `layouts/partials/header.html` |
-| Main CSS | `static/css/main.css` |
-| Article CSS | `static/css/article.css` |
+## AI Workflows
 
-## Do Not Modify
+- `.github/workflows/qwen-invoke.yml` — triggers AI content generation on issue comment
+- `.github/workflows/qwen-triage.yml` — auto-triage issues with AI labels
 
-| Path | Reason |
-|------|--------|
-| `public/` | Generated output |
-| `resources/_gen/` | Hugo resource cache |
-| `themes/ananke/` | Git submodule |
+## Do Not Edit
 
-## Instructions
-
-- `.github/copilot-instructions.md`: Persona and workflow guidelines
-- `.github/instructions/leetcode-writing-guide.md`: LeetCode article writing standard (applies to `content/notes/code/**/*.md`)
+- `public/` — Hugo generated output
+- `resources/_gen/` — Hugo resource cache

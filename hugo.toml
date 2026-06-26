@@ -11,9 +11,12 @@ title = 'Ruihui Xu' # 网站标题
   tag = "tags"
   category = "categories"
 
+[markup.goldmark.renderer]
+  unsafe = true  # allow raw HTML like <details> in markdown
+
 [params]
   description = ""
-  mainSections = ["notes", "misc", "projects"]
+  mainSections = ["notes", "rl-tutorial", "misc", "projects"]
 
 [menu]
   # Home - Left side
@@ -64,6 +67,20 @@ title = 'Ruihui Xu' # 网站标题
     url = "/notes/recommendation/"
     parent = "notes"
     weight = 3
+
+  [[menu.main]]
+    identifier = "notes-fundamentals"
+    name = "Fundamentals"
+    url = "/notes/fundamentals/"
+    parent = "notes"
+    weight = 4
+
+  # RL Tutorial
+  [[menu.main]]
+    identifier = "rl-tutorial"
+    name = "RL Tutorial"
+    url = "/rl-tutorial/"
+    weight = 35
 
   # Misc
   [[menu.main]]

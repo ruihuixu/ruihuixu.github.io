@@ -1,0 +1,82 @@
+{{ define "main" }}
+<section class="section">
+  <div class="section-header" style="text-align:center;margin-bottom:var(--spacing-3xl);">
+    <h1 class="section-title">{{ .Title }}</h1>
+    {{ if .Description }}
+      <p class="section-subtitle" style="max-width:700px;margin:var(--spacing-md) auto 0;color:var(--text-secondary);line-height:1.8;">{{ .Description }}</p>
+    {{ end }}
+  </div>
+
+  <!-- 学习路径概览 -->
+  {{ .Content }}
+
+  <!-- 章节卡片网格 -->
+  {{ $chapters := where .Pages "Params.chapter" "!=" nil }}
+  {{ $refPages := where .Pages "Params.chapter" "eq" nil }}
+
+  <div class="card-grid" style="margin-top:var(--spacing-2xl);">
+    {{ range sort $chapters "Params.chapter" }}
+      <article class="card rl-chapter-card" style="border-left: 3px solid
+        {{ if eq .Params.difficulty "入门" }}var(--accent-green)
+        {{ else if eq .Params.difficulty "核心" }}var(--accent-cyan)
+        {{ else if eq .Params.difficulty "进阶" }}var(--accent-orange)
+        {{ else }}var(--border-primary){{ end }};">
+
+        <div style="display:flex;align-items:flex-start;gap:var(--spacing-md);">
+          <span style="font-size:2rem;font-weight:800;color:var(--accent-cyan);line-height:1;min-width:48px;text-align:center;">{{ printf "%02d" .Params.chapter }}</span>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:var(--spacing-sm);flex-wrap:wrap;margin-bottom:var(--spacing-sm);">
+              <span class="difficulty-badge
+                {{ if eq .Params.difficulty "入门" }}diff-intro
+                {{ else if eq .Params.difficulty "核心" }}diff-core
+                {{ else if eq .Params.difficulty "进阶" }}diff-adv
+                {{ end }}">{{ .Params.difficulty }}</span>
+              <span class="section-badge">{{ .Params.section }}</span>
+            </div>
+            <h3 class="card-title" style="margin:0 0 var(--spacing-sm) 0;">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h3>
+            <p class="card-description">{{ .Description }}</p>
+            <div class="card-meta" style="margin-top:var(--spacing-sm);">
+              {{ range .Params.tags }}
+                <span class="tag-small">{{ . }}</span>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+        <a href="{{ .RelPermalink }}" class="card-link"></a>
+      </article>
+    {{ end }}
+  </div>
+
+  <!-- 参考页面 -->
+  {{ if $refPages }}
+  <div style="margin-top:var(--spacing-3xl);padding-top:var(--spacing-2xl);border-top:1px solid var(--border-primary);">
+    <h2 style="font-size:1.2rem;color:var(--text-primary);margin-bottom:var(--spacing-lg);">📚 参考资源</h2>
+    <div style="display:flex;gap:var(--spacing-lg);flex-wrap:wrap;">
+      {{ range $refPages }}
+        <a href="{{ .RelPermalink }}" style="padding:var(--spacing-md) var(--spacing-lg);background:var(--bg-secondary);border:1px solid var(--border-primary);border-radius:var(--radius-md);color:var(--text-primary);text-decoration:none;transition:all var(--transition-base);">
+          <span style="font-weight:600;">{{ .Title }}</span>
+          <span style="display:block;color:var(--text-secondary);font-size:var(--text-sm);margin-top:4px;">{{ .Description }}</span>
+        </a>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+</section>
+
+<style>
+  .rl-chapter-card { padding: var(--spacing-xl); transition: all var(--transition-base); }
+  .rl-chapter-card:hover { border-color: var(--accent-cyan) !important; transform: translateX(4px); }
+  .difficulty-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;
+  }
+  .diff-intro { background: rgba(34,197,94,0.15); color: var(--accent-green); }
+  .diff-core { background: rgba(0,200,200,0.15); color: var(--accent-cyan); }
+  .diff-adv { background: rgba(255,150,50,0.15); color: var(--accent-orange); }
+  .section-badge {
+    display: inline-block; padding: 2px 8px; background: var(--bg-tertiary); border: 1px solid var(--border-primary);
+    border-radius: 4px; font-size: 11px; color: var(--text-secondary);
+  }
+</style>
+{{ end }}
