@@ -8,11 +8,11 @@ tags:
 description: "字节跳动 15B 参数大规模推荐架构，RankMixer 的系统性演进版本"
 ---
 
-## 📌 一句话总结
+## 1. 一句话总结
 
-**TokenMixer-Large 是 RankMixer 的大规模演进版本**，通过 Mixing & Reverting 残差对齐、Inter-Residual + Aux Loss 深层稳定性设计、Sparse-PerToken MoE 稀疏训练，将最大参数规模从 1B 扩展至 15B，MFU 从 45% 提升至 60%，在电商场景带来订单量 +1.66%、人均预览支付 GMV +2.98% 的显著收益。
+**TokenMixer-Large 是 RankMixer 的演进版本**，通过 Mixing & Reverting 残差对齐、Inter-Residual + Aux Loss 深层稳定性设计、Sparse-PerToken MoE 稀疏训练，将最大参数规模从 1B 扩展至 15B，MFU 从 45% 提升至 60%，在电商场景带来订单量 +1.66%、人均预览支付 GMV +2.98% 的显著收益。
 
-## ❓ 问题背景
+## 2. 问题背景
 
 ### 2.1 RankMixer 的成功与局限
 
@@ -20,12 +20,11 @@ description: "字节跳动 15B 参数大规模推荐架构，RankMixer 的系统
 - 替换自注意力为轻量 Token 混合，平衡效果与效率
 - MFU 从 4.5% 提升至 45%，实现 70 倍参数扩展
 
-**局限（深层配置时的五大瓶颈）：**
-1. **次优残差设计** - 混合前后 Token 直接相加，语义不对齐
-2. **模型架构不纯** - 保留大量碎片化算子（LHUC、DCNv2 等）
-3. **深层模型梯度更新不足** - 通常仅 2 层，加深后训练不稳定
-4. **MoE 稀疏化不充分** - "稠密训练，稀疏推理"，训练成本未降低
-5. **规模探索有限** - 仅扩展到约 1B 参数
+**局限：**
+1. **次优残差设计**：混合前后 Token 直接相加，一方面语义不对齐，另一方面深层网络不友好，影响梯度流动和训练稳定性
+2. **模型架构不纯**：保留大量碎片化算子（LHUC、DCNv2 等）
+3. **MoE 稀疏化不充分** - "稠密训练，稀疏推理"，训练成本未降低
+4. **规模探索有限** - 仅扩展到约 1B 参数
 
 ### 2.2 TokenMixer-Large 目标
 
@@ -45,7 +44,7 @@ description: "字节跳动 15B 参数大规模推荐架构，RankMixer 的系统
 ### 3.2 总体架构
 
 ```
-输入 X ∈ R^(T×D) → Mixing → H ∈ R^(H×T·D/H) → Reverting → X_revert ∈ R^(T×D) → 残差连接 → 输出
+输入 X ∈ R^(T×D) → Mixing → H ∈ R^(H×T·D/H) → Sparse-PerToken SwiGLU → Reverting → X_revert ∈ R^(T×D) → 残差连接 → 输出
 ```
 
 ### 3.3 Mixing & Reverting 操作
@@ -57,9 +56,11 @@ description: "字节跳动 15B 参数大规模推荐架构，RankMixer 的系统
   ↓
 Mixing → H ∈ R^(H×T·D/H)  ← 混合信息
   ↓
-Reverting → X_revert ∈ R^(T×D)  ← 恢复原始维度
+Sparse-PerToken SwiGLU → H' ∈ R^(H×T·D/H)  ← 非线性变换混合信息
   ↓
-残差连接：X_revert + X  ✅ 语义对齐
+Reverting → X_revert ∈ R^(T×D)  ← 恢复原始维度，实现语义对齐
+  ↓
+残差连接：X_revert + X 
 ```
 
 **优势：**
@@ -88,7 +89,7 @@ Layer 1 → Layer 2 → Layer 3 → Layer 4
 - 缓解 SwiGLU 中 up×gate 的数值爆炸问题
 
 **4. Pre-Norm 替代 Post-Norm：**
-- Post-Norm 易梯度爆炸 → Pre-Norm 稳定训练
+- Post-Norm 梯度相对不稳定 → Pre-Norm 稳定训练
 
 **消融实验结果：**
 
@@ -107,8 +108,8 @@ Layer 1 → Layer 2 → Layer 3 → Layer 4
 - 训练 - 推理不一致
 
 **TokenMixer-Large (Sparse-PerToken MoE) 的解决方案：**
-- 训练模式：Sparse Train, Sparse Infer ✅
-- 路由：Softmax + Top-K（统一范式）
+- 训练模式：Sparse Train, Sparse Infer ————训练推理对齐
+- 路由：Softmax + Top-K
 
 **创新设计：**
 
@@ -210,12 +211,12 @@ Layer 1 → Layer 2 → Layer 3 → Layer 4
 | 深层稳定 | ❌ 无专门设计 | ✅ Inter-Residual+AuxLoss | 关键改进 |
 | MoE 训练 | 稠密训练 | 稀疏训练 | 成本 -50% |
 | 模型纯度 | 混合架构 | 纯模型 | MFU +15% |
-| 归一化 | LayerNorm+Post | RMSNorm+Pre | 吞吐 +8.4% |
+| 归一化 | LayerNorm+Post | RMSNorm+Pre | 适配深层网络 |
 | 初始化 | 标准 Xavier | Down-Matrix Small | AUC +0.03% |
 
 ### 核心洞察
 
-1. **系统性解决瓶颈** - TokenMixer-Large 不是推翻 RankMixer，而是系统性地解决了 RankMixer 在大规模扩展时的关键瓶颈
+1. **系统性解决瓶颈** - TokenMixer-Large 主要针对 RankMixer 继续扩展参数量的瓶颈，优化层数加深的训练稳定性、训练层本。
 2. **继承的设计** - Token Mixer 核心机制、Per-Token 架构思想、MoE 扩展方向
 3. **改进的设计** - 残差连接、深层稳定性、MoE 训练模式、模型纯度、归一化与初始化
 
