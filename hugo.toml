@@ -88,3 +88,10 @@ title = 'Ruihui Xu' # 网站标题
     name = "Misc"
     url = "/misc/"
     weight = 40
+
+  # Reading
+  [[menu.main]]
+    identifier = "reading"
+    name = "阅读"
+    url = "/reading/"
+    weight = 38

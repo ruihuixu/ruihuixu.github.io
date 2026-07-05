@@ -1,0 +1,177 @@
+{{/* 阅读页面模板 — 雷达图 + 时间线流图 + 阅读人格 */}}
+{{ define "main" }}
+{{ $data := index .Site.Data "weread" }}
+
+<div class="reading-page">
+
+  <!-- ═══ 统计数字卡片 ═══ -->
+  <section class="reading-hero">
+    <div class="stats-row">
+      <div class="stat-card">
+        <span class="stat-number">{{ $data.stats.totalBooks }}</span>
+        <span class="stat-label">读过</span>
+      </div>
+      <div class="stat-card highlight">
+        <span class="stat-number">{{ $data.stats.finishedBooks }}</span>
+        <span class="stat-label">读完</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">{{ $data.stats.totalHours }}h</span>
+        <span class="stat-label">阅读时长</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">{{ $data.stats.readDays }}天</span>
+        <span class="stat-label">阅读天数</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">{{ $data.stats.notes }}</span>
+        <span class="stat-label">笔记</span>
+      </div>
+    </div>
+    <p class="reading-subtitle">{{ $data.preferTimeWord }} · 书架 {{ $data.stats.shelfBooks }} 本待读</p>
+  </section>
+
+  <!-- ═══ 雷达图 + 阅读人格 ═══ -->
+  <section class="reading-section">
+    <h2 class="section-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      阅读光谱
+    </h2>
+    <div class="radar-row">
+      <div class="radar-chart-wrap">
+        <canvas id="radarChart"></canvas>
+      </div>
+      <div class="personality-text">
+        {{ $data.personality | markdownify }}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 时间线流图 ═══ -->
+  <section class="reading-section">
+    <h2 class="section-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      阅读轨迹
+    </h2>
+    <div class="stream-chart-wrap">
+      <canvas id="streamChart"></canvas>
+    </div>
+  </section>
+
+  <!-- ═══ 投入最深 ═══ -->
+  <section class="reading-section">
+    <h2 class="section-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      投入最深
+    </h2>
+    <div class="books-grid" id="booksGrid">
+      {{ range $i, $b := $data.longest }}
+      <div class="book-card">
+        <div class="book-rank">#{{ add $i 1 }}</div>
+        <div class="book-cover">
+          {{ if $b.cover }}<img src="{{ $b.cover }}" alt="{{ $b.title }}" loading="lazy">{{ end }}
+        </div>
+        <div class="book-info">
+          <h3 class="book-title">{{ $b.title }}</h3>
+          <p class="book-author">{{ $b.author }}</p>
+          <div class="book-hours-bar">
+            <span class="hours-fill" data-hours="{{ $b.hours }}"></span>
+            <span class="hours-text">{{ $b.hours }}h</span>
+          </div>
+          {{ if $b.tags }}
+          <div class="book-tags">
+            {{ range $b.tags }}<span class="book-tag">{{ . }}</span>{{ end }}
+          </div>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+
+</div>
+
+{{/* ── Chart.js + 渲染 ── */}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script>
+(function() {
+  const dark = '#f0f6fc', muted = '#a0a8b2', border = '#30363d';
+  const palette = ['#58a6ff','#bc8cff','#3fb950','#d29922','#db6d9e','#f85149','#79c0ff','#a5d6ff','#d2a8ff','#ffa657'];
+
+  // ── 进度条渲染 ──
+  document.querySelectorAll('.hours-fill').forEach(el => {
+    const h = parseFloat(el.dataset.hours);
+    el.style.width = Math.min((h / 15) * 100, 100) + '%';
+  });
+
+  // ── 雷达图 ──
+  new Chart(document.getElementById('radarChart'), {
+    type: 'radar',
+    data: {
+      labels: [{{ range $data.radar }}"{{ .category }}",{{ end }}],
+      datasets: [{
+        data: [{{ range $data.radar }}{{ .hours }},{{ end }}],
+        backgroundColor: 'rgba(88,166,255,0.15)',
+        borderColor: '#58a6ff',
+        borderWidth: 2,
+        pointBackgroundColor: '#58a6ff',
+        pointBorderColor: '#0d1117',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        r: {
+          beginAtZero: true, max: 35,
+          ticks: { stepSize: 5, color: muted, backdropColor: 'transparent', font: { size: 10 } },
+          grid: { color: border },
+          angleLines: { color: border },
+          pointLabels: { color: dark, font: { size: 13, family: "'Noto Sans SC','PingFang SC',sans-serif" } }
+        }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // ── 时间线流图 ──
+  const t = JSON.parse({{ $data.timeline | jsonify }});
+  const streamDatasets = t.categories.map((cat, i) => ({
+    label: cat.name, data: cat.hours,
+    backgroundColor: palette[i % palette.length] + '99',
+    borderColor: palette[i % palette.length], borderWidth: 1.5,
+    fill: true, tension: 0.35, pointRadius: 3, pointHoverRadius: 5,
+    pointBackgroundColor: palette[i % palette.length],
+  }));
+
+  new Chart(document.getElementById('streamChart'), {
+    type: 'line',
+    data: { labels: t.years, datasets: streamDatasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      scales: {
+        x: { stacked: true, ticks: { color: dark, font: { size: 14 } }, grid: { color: border } },
+        y: {
+          stacked: true,
+          title: { display: true, text: '阅读小时', color: muted },
+          ticks: { color: muted }, grid: { color: border }
+        }
+      },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: muted, usePointStyle: true, pointStyleWidth: 10, padding: 16, font: { size: 12 } }
+        },
+        tooltip: {
+          callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + 'h' }
+        }
+      }
+    }
+  });
+})();
+</script>
+{{ end }}
