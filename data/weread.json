@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-05 21:55:49",
+  "generated_at": "2026-07-05 22:31:33",
   "stats": {
     "totalBooks": "35本",
     "finishedBooks": "23本",
@@ -11,41 +11,49 @@
   "radar": [
     {
       "category": "心理",
+      "parent": "心理",
       "hours": 30.5,
       "count": 5
     },
     {
       "category": "社会文化",
+      "parent": "社会文化",
       "hours": 27.5,
       "count": 6
     },
     {
       "category": "文学",
+      "parent": "文学",
       "hours": 23.8,
       "count": 6
     },
     {
       "category": "历史",
+      "parent": "历史",
       "hours": 21.9,
       "count": 4
     },
     {
       "category": "经济理财",
+      "parent": "经济理财",
       "hours": 16.6,
       "count": 3
     },
     {
       "category": "哲学宗教",
+      "parent": "哲学宗教",
       "hours": 11.9,
       "count": 3
     },
     {
       "category": "个人成长",
+      "parent": "个人成长",
       "hours": 8.9,
       "count": 4
     },
     {
       "category": "纪实小说",
+      "parent": "精品小说",
       "hours": 7.0,
       "count": 1
     }
@@ -153,84 +161,84 @@
     {
       "title": "人类简史：从动物到上帝",
       "author": "尤瓦尔·赫拉利",
-      "cover": "https://cdn.weread.qq.com/weread/cover/37/YueWen_855812/s_YueWen_855812.jpg",
       "hours": 13.7,
       "tags": [],
-      "deepLink": ""
+      "cover": "https://cdn.weread.qq.com/weread/cover/37/YueWen_855812/s_YueWen_855812.jpg",
+      "notes": 0
     },
     {
       "title": "小镇喧嚣：一个乡镇政治运作的演绎与阐释",
       "author": "吴毅",
-      "cover": "https://cdn.weread.qq.com/weread/cover/89/cpPlatform_nVqL1T1SuysradaMks3Dbi/s_cpPlatform_nVqL1T1SuysradaMks3Dbi.jpg",
       "hours": 11.6,
       "tags": [],
-      "deepLink": ""
+      "cover": "https://cdn.weread.qq.com/weread/cover/89/cpPlatform_nVqL1T1SuysradaMks3Dbi/s_cpPlatform_nVqL1T1SuysradaMks3Dbi.jpg",
+      "notes": 1
     },
     {
       "title": "中国哲学简史",
       "author": "冯友兰",
-      "cover": "https://cdn.weread.qq.com/weread/cover/24/YueWen_651358/s_YueWen_651358.jpg",
       "hours": 10.8,
       "tags": [],
-      "deepLink": ""
+      "cover": "https://cdn.weread.qq.com/weread/cover/24/YueWen_651358/s_YueWen_651358.jpg",
+      "notes": 0
     },
     {
       "title": "置身事内：中国政府与经济发展",
       "author": "兰小欢",
-      "cover": "https://cdn.weread.qq.com/weread/cover/52/YueWen_40055543/s_YueWen_40055543.jpg",
       "hours": 10.3,
       "tags": [],
-      "deepLink": ""
+      "cover": "https://cdn.weread.qq.com/weread/cover/52/YueWen_40055543/s_YueWen_40055543.jpg",
+      "notes": 0
     },
     {
       "title": "苏菲的世界",
       "author": "乔斯坦·贾德",
-      "cover": "https://cdn.weread.qq.com/weread/cover/13/YueWen_703157/s_YueWen_703157.jpg",
       "hours": 9.8,
       "tags": [],
-      "deepLink": ""
+      "cover": "https://cdn.weread.qq.com/weread/cover/13/YueWen_703157/s_YueWen_703157.jpg",
+      "notes": 0
     },
     {
       "title": "赵传霖 - 互联网大厂推荐算法实战",
       "author": "",
-      "cover": "https://res.weread.qq.com/wrepub/CB_BCe74e75kCPz71X71M5zS14I_parsecover",
       "hours": 9.6,
       "tags": [
         "单日阅读最久"
       ],
-      "deepLink": ""
+      "cover": "https://res.weread.qq.com/wrepub/CB_BCe74e75kCPz71X71M5zS14I_parsecover",
+      "notes": 1
     },
     {
       "title": "也许你该找个人聊聊",
       "author": "洛莉·戈特利布",
-      "cover": "https://cdn.weread.qq.com/weread/cover/63/YueWen_40726710/s_YueWen_40726710.jpg",
       "hours": 8.4,
       "tags": [],
-      "deepLink": ""
+      "cover": "https://cdn.weread.qq.com/weread/cover/63/YueWen_40726710/s_YueWen_40726710.jpg",
+      "notes": 1
     },
     {
       "title": "法治的细节",
       "author": "罗翔",
-      "cover": "https://cdn.weread.qq.com/weread/cover/40/3300012940/s_3300012940.jpg",
       "hours": 8.0,
       "tags": [],
-      "deepLink": ""
+      "cover": "https://cdn.weread.qq.com/weread/cover/40/3300012940/s_3300012940.jpg",
+      "notes": 1
     },
     {
       "title": "我的二本学生",
       "author": "黄灯",
-      "cover": "https://cdn.weread.qq.com/weread/cover/43/YueWen_34615965/s_YueWen_34615965.jpg",
       "hours": 7.0,
       "tags": [],
-      "deepLink": ""
+      "cover": "https://cdn.weread.qq.com/weread/cover/43/YueWen_34615965/s_YueWen_34615965.jpg",
+      "notes": 0
     },
     {
       "title": "亲密关系（第8版）",
       "author": "[美]罗兰·米勒",
-      "cover": "https://cdn.weread.qq.com/weread/cover/29/cpplatform_fajupe6tastyjcbfydk4sx/s_cpplatform_fajupe6tastyjcbfydk4sx1722240377.jpg",
       "hours": 6.5,
       "tags": [],
-      "deepLink": ""
+      "cover": "https://cdn.weread.qq.com/weread/cover/29/cpplatform_fajupe6tastyjcbfydk4sx/s_cpplatform_fajupe6tastyjcbfydk4sx1722240377.jpg",
+      "notes": 2
     }
   ],
   "preferAuthor": [
@@ -286,5 +294,5 @@
     }
   ],
   "preferTimeWord": "偏好下午与夜晚阅读",
-  "personality": "从 2024 年至今，累计阅读 **155 小时**，涉猎 **35本 本书**，读完 **23本 本**。偏好下午与夜晚阅读。\n\n阅读光谱以 **心理、社会文化、文学** 为三重核心。其中「心理」投入最深（30.5h），「社会文化」（27.5h）与「文学」（23.8h）紧随其后。\n\n阅读兴趣正经历一次明显的「向内转」：**社会文化** 类异军突起（相比 2024 年增长 6.4h），从书架上的边缘类别变成了主力投入。\n与此同时，「历史」的投入有所回落（减少约 19.1h），兴趣焦点在收窄和深化。\n\n**318 天**的阅读天数意味着几乎每天都有翻开书本——这不是突击式阅读，而是融入日常的持续习惯。\n八个类别之间分布比较均衡，广度与深度兼而有之。\n\n整体来看，这是一位**思考型读者**的阅读轨迹：偏好能提供认知框架的严肃读物（社科、心理、历史、哲学），而非消遣型内容。阅读是为了理解世界如何运转，以及人在其中如何自处。"
+  "personality": "从 2024 年至今，累计阅读 **155 小时**，涉猎 **35本**，读完 **23本**。偏好下午与夜晚阅读。\n\n阅读光谱以 **心理、社会文化、文学** 为三重核心。其中「心理」投入最深（30.5h），「社会文化」（27.5h）与「文学」（23.8h）紧随其后。\n\n阅读兴趣正经历一次明显的「向内转」：**社会文化** 类异军突起（相比 2024 年增长 6.4h），从书架上的边缘类别变成了主力投入。\n与此同时，「历史」的投入有所回落（减少约 19.1h），兴趣焦点在收窄和深化。\n\n**318 天**的阅读天数意味着几乎每天都有翻开书本——这不是突击式阅读，而是融入日常的持续习惯。\n\n整体来看，这是一位**思考型读者**的阅读轨迹：偏好能提供认知框架的严肃读物（社科、心理、历史、哲学），而非消遣型内容。阅读是为了理解世界如何运转，以及人在其中如何自处。"
 }
