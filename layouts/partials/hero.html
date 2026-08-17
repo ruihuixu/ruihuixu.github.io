@@ -1,55 +1,53 @@
-<section class="hero" id="home">
-  <!-- 背景效果 -->
-  <div class="hero-bg">
-    <div class="hero-grid"></div>
-    <div class="hero-particle"></div>
-    <div class="hero-particle"></div>
-    <div class="hero-particle"></div>
-    <div class="hero-particle"></div>
-    <div class="hero-particle"></div>
+<section class="hero planet-hero" id="home">
+  <!-- 深暖夜空背景 -->
+  <div class="space-bg">
+    <div class="star-field"></div>
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
   </div>
 
-  <div class="hero-container">
-    <div class="hero-content">
-      <p class="hero-greeting">你好，我是</p>
-      <h1 class="hero-title">
-        {{ .Site.Data.profile.name }}<br>
-        <span class="hero-title-highlight">{{ .Site.Data.profile.bio }}</span>
-      </h1>
-      <p class="hero-subtitle">
-        {{ .Site.Params.description }}
-      </p>
-      <div class="hero-cta">
-        <a href="#notes" class="btn btn-primary">
-          开始阅读
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
-        <a href="#misc" class="btn btn-secondary">
-          杂谈
-        </a>
-        {{ if .Site.Data.profile.info }}
-          {{ range .Site.Data.profile.info }}
-            {{ if and .link (eq .icon "🔗") }}
-              <a href="{{ .link }}" target="_blank" rel="noopener" class="btn btn-secondary">
-                GitHub
-              </a>
-            {{ end }}
-          {{ end }}
-        {{ end }}
-      </div>
+  <!-- 轨道系统 -->
+  <div class="solar-system" aria-label="博客目录">
+    <!-- 中央主星(纯图形, 无文字) -->
+    <div class="sun">
+      <div class="sun-core"></div>
+      <div class="sun-glow"></div>
     </div>
 
-    <div class="hero-image">
-      <div class="avatar-container">
-        <div class="avatar-ring"></div>
-        {{ if .Site.Data.profile.avatar }}
-          <img src="{{ .Site.Data.profile.avatar }}" alt="{{ .Site.Data.profile.name }}" class="avatar">
-        {{ else }}
-          <div class="avatar" style="background: var(--gradient-primary);"></div>
-        {{ end }}
-      </div>
+    <!-- 轨道 1: 阅读 -->
+    <div class="orbit orbit-1">
+      <div class="orbit-path"></div>
+      <a href="/reading/" class="planet planet-reading" data-label="阅读">
+        <span class="planet-body"></span>
+        <span class="planet-ring"></span>
+        <span class="planet-halo"></span>
+      </a>
     </div>
+
+    <!-- 轨道 2: 杂谈 -->
+    <div class="orbit orbit-2">
+      <div class="orbit-path"></div>
+      <a href="/misc/" class="planet planet-misc" data-label="杂谈">
+        <span class="planet-body"></span>
+        <span class="planet-ring"></span>
+        <span class="planet-halo"></span>
+      </a>
+    </div>
+
+    <!-- 轨道 3: 关于我 -->
+    <div class="orbit orbit-3">
+      <div class="orbit-path"></div>
+      <a href="/profile/" class="planet planet-about" data-label="关于我">
+        <span class="planet-body"></span>
+        <span class="planet-ring"></span>
+        <span class="planet-halo"></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 底部滚动提示 -->
+  <div class="scroll-hint">
+    <span>向下滚动</span>
+    <div class="scroll-line"></div>
   </div>
 </section>
