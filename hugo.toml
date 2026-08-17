@@ -16,7 +16,7 @@ title = 'Ruihui Xu' # 网站标题
 
 [params]
   description = ""
-  mainSections = ["notes", "rl-tutorial", "misc", "projects"]
+  mainSections = ["misc", "projects", "profile"]
 
 [menu]
   # Home - Left side
