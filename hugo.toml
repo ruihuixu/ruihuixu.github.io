@@ -15,7 +15,7 @@ title = 'Ruihui Xu' # 网站标题
   unsafe = true  # allow raw HTML like <details> in markdown
 
 [params]
-  description = ""
+  description = "读书 · 杂谈 · 技术笔记"
   mainSections = ["misc", "projects", "profile"]
 
 [menu]
@@ -39,48 +39,6 @@ title = 'Ruihui Xu' # 网站标题
     name = "Projects"
     url = "/projects/"
     weight = 20
-
-  # Notes (with submenus)
-  [[menu.main]]
-    identifier = "notes"
-    name = "Notes"
-    url = "/notes/"
-    weight = 30
-
-  [[menu.main]]
-    identifier = "notes-code"
-    name = "Code"
-    url = "/notes/code/"
-    parent = "notes"
-    weight = 1
-
-  [[menu.main]]
-    identifier = "notes-tools"
-    name = "Tools"
-    url = "/notes/tools/"
-    parent = "notes"
-    weight = 2
-
-  [[menu.main]]
-    identifier = "notes-recommendation"
-    name = "Recommendation"
-    url = "/notes/recommendation/"
-    parent = "notes"
-    weight = 3
-
-  [[menu.main]]
-    identifier = "notes-fundamentals"
-    name = "Fundamentals"
-    url = "/notes/fundamentals/"
-    parent = "notes"
-    weight = 4
-
-  # RL Tutorial
-  [[menu.main]]
-    identifier = "rl-tutorial"
-    name = "RL Tutorial"
-    url = "/rl-tutorial/"
-    weight = 35
 
   # Misc
   [[menu.main]]

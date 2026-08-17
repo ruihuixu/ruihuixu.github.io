@@ -1,44 +1,18 @@
 <section class="section" id="notes">
   <div class="section-header">
-    <h2 class="section-title">技术笔记</h2>
-    <p class="section-subtitle">记录学习历程，分享技术心得</p>
+    <h2 class="section-title">最新文章</h2>
+    <p class="section-subtitle">读书 · 杂谈 · 技术</p>
   </div>
 
   <!-- 最新文章卡片横向排列 -->
   <div class="card-grid">
-    {{/* 获取所有技术笔记 */}}
-    {{ $allNotes := where .Site.RegularPages "Section" "notes" }}
-    {{ range first 6 $allNotes }}
-      {{ $firstTag := "" }}
-      {{ if .Params.tags }}
-        {{ $firstTag = index .Params.tags 0 }}
-      {{ end }}
+    {{/* 获取所有文章(排除 profile/projects 等页面) */}}
+    {{ $allPosts := where .Site.RegularPages "Section" "in" (slice "misc" "reading") }}
+    {{ range first 6 $allPosts }}
       <article class="card fade-in">
         <span class="card-icon">
-          {{ if eq .Section "notes/code" }}
-            {{/* 算法题解 - 根据第一个标签显示图标 */}}
-            {{ $icon := "📌" }}
-            {{ if eq $firstTag "动态规划" }}{{ $icon = "🧩" }}
-            {{ else if eq $firstTag "搜索遍历" }}{{ $icon = "🔍" }}
-            {{ else if eq $firstTag "双指针" }}{{ $icon = "👆" }}
-            {{ else if eq $firstTag "贪心" }}{{ $icon = "🎯" }}
-            {{ else if eq $firstTag "回溯" }}{{ $icon = "🔄" }}
-            {{ else if eq $firstTag "树" }}{{ $icon = "🌳" }}
-            {{ else if eq $firstTag "链表" }}{{ $icon = "🔗" }}
-            {{ else if eq $firstTag "字符串" }}{{ $icon = "📝" }}
-            {{ else if eq $firstTag "栈哈希" }}{{ $icon = "🗂️" }}
-            {{ else if eq $firstTag "数组二分" }}{{ $icon = "📋" }}
-            {{ end }}
-            {{ $icon }}
-          {{ else if eq .Section "notes/tools" }}
-            {{ if eq $firstTag "Git" }}📦{{ else }}🐍{{ end }}
-          {{ else if eq .Section "notes/recommendation" }}
-            {{ if eq $firstTag "生成式推荐" }}🤖
-            {{ else if eq $firstTag "判别式推荐" }}🎯
-            {{ else if eq $firstTag "端到端" }}🔄
-            {{ else }}⭐{{ end }}
-          {{ else }}📝
-          {{ end }}
+          {{ if eq .Section "reading" }}📖
+          {{ else }}💬{{ end }}
         </span>
         <div class="card-content">
           <h3 class="card-title">
@@ -46,16 +20,8 @@
           </h3>
           <div class="card-meta">
             <time>{{ .Date.Format "2006-01-02" }}</time>
-            {{ if eq .Section "notes/code" }}
-              {{ range .Params.tags }}
-                <span class="tag-small">{{ . }}</span>
-              {{ end }}
-            {{ else if eq .Section "notes/tools" }}
-              <span class="tag-small">{{ .Params.tags | index 0 }}</span>
-            {{ else if eq .Section "notes/recommendation" }}
-              {{ range .Params.tags }}
-                <span class="tag-small">{{ . }}</span>
-              {{ end }}
+            {{ range .Params.tags }}
+              <span class="tag-small">{{ . }}</span>
             {{ end }}
           </div>
           <p class="card-description">
@@ -67,10 +33,10 @@
     {{ end }}
   </div>
 
-  {{ if gt (len $allNotes) 6 }}
+  {{ if gt (len $allPosts) 6 }}
     <div class="text-center mt-3">
-      <a href="/notes/" class="btn btn-secondary">
-        查看更多笔记
+      <a href="/misc/" class="btn btn-secondary">
+        查看更多
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
