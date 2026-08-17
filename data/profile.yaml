@@ -1,7 +1,7 @@
 # 这里的配置将控制首页左侧栏的显示
 name: "Ruihui Xu"
 avatar: "/images/me.png" # 头像图片路径，放在 static 文件夹下
-bio: "AI Researcher | Focusing on MultiModal & RecSys"
+bio: "在读研究生，研究推荐系统与多模态。这里记录读书、思考与技术的随笔。"
 
 # 个人信息 (图标可以是 emoji，也可以是 HTML 代码)
 info:
@@ -29,11 +29,8 @@ education:
     degree: "计算机科学与技术 (学士)"
     period: "2020 - 2024"
 
-# 核心成就
-achievements:
-  - title: "CERTrack: Exploiting Complementary Event Representations for RGBE Tracking"
-    description: "IEEE International Conference on Multimedia and Expo (ICME) 2026 | 第一作者"
-    date: "2026.07"
-  - title: "Memory-Augmented Dynamic Graph Attention for Event-Driven 3D Human Pose Estimation"
-    description: "IEEE International Conference on Multimedia and Expo (ICME) 2026 | 第三作者"
-    date: "2026.07"
+# 关于
+about: |
+  这里是一个普通研究生记录思考的地方。
+  读书、技术、生活，想到什么写什么。
+  如果某一篇对你有帮助，那就太好了。
